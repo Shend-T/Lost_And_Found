@@ -1,0 +1,84 @@
+/* === General === */
+:root {
+  --primary-text-color: #000000;
+  --secondary-text-color: #dddfff;
+
+  /* Style 1 */
+  /* 
+  --color-white: #FAF7F0;
+  --color-secondary: #D8D2C2;
+  --color-primary: #B17457;
+  --color-dark: #4A4947;
+  */
+
+  /* Style 2 */
+  /* 
+  --color-white: #FFF8E8;
+  --color-secondary: #F7EED3;
+  --color-primary: #AAB396;
+  --color-dark: #674636;
+  */
+
+  --secondary-font-family: "Courier New", Courier, monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  font-family: "Ubuntu", sans-serif;
+}
+
+/* === Text === */
+h1 {
+  font-family: var(--secondary-font-family);
+  font-size: clamp(2.6rem, 5vw, 3rem);
+}
+
+p {
+  font-size: clamp(1.4rem, 5vw, 1.6rem);
+}
+
+/* === Links & Images === */
+a {
+  text-decoration: none;
+  color: var(--primary-text-color);
+}
+
+a:hover {
+  color: var(--secondary-text-color);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* === Utils === */
+.flex {
+  display: flex;
+  gap: 10px;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.center-v {
+  align-items: center;
+}
+.center-h {
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
