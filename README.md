@@ -23,20 +23,6 @@ Projekti është ndërtuar duke përdorur vetëm teknologjitë bazike të zhvill
 
 ---
 
-## 🧩 Struktura e Projektit
-
-Lost_And_Found/
-│
-├── css/ # Skedarët e stilizimit (CSS)
-├── js/ # Skedarët e funksioneve JavaScript
-├── media/ # Ikona, imazhe, dhe elemente vizuale
-├── pages/ # Faqe shtesë (si about.html, contact.html, etj.)
-├── user uploads/ # Imazhet e ngarkuara nga përdoruesit
-│
-└── index.html # Faqja kryesore e projektit
-
----
-
 ## ⚙️ Funksionalitetet Kryesore
 
 - Publikimi i njoftimeve për sende të **humbura** ose **të gjetura**
