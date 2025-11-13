@@ -1,0 +1,47 @@
+/* Reset defaults */
+html, body {
+    margin: 0;
+    padding: 70px 0 0 0;
+    background-color: #FFF8DE;
+}
+
+/* Navbar container */
+nav {
+    background-color: #8CA9FF;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 55px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+
+#logo {
+    height: 35px;
+    width: 55px;
+}
+
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+}
+
+.nav-icons img {
+    height: 28px;
+    width: 28px;
+    transition: transform 0.2s;
+}
+
+
+.nav-icons img:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
