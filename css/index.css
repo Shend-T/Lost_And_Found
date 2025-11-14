@@ -3,21 +3,10 @@
   --primary-text-color: #000000;
   --secondary-text-color: #dddfff;
 
-  /* Style 1 */
-  /* 
-  --color-white: #FAF7F0;
-  --color-secondary: #D8D2C2;
-  --color-primary: #B17457;
-  --color-dark: #4A4947;
-  */
-
-  /* Style 2 */
-  /* 
-  --color-white: #FFF8E8;
-  --color-secondary: #F7EED3;
-  --color-primary: #AAB396;
-  --color-dark: #674636;
-  */
+  --color-white: #fff8de;
+  --color-primary: #8ca9ff;
+  --color-secondary: #aac4f5;
+  --color-accent: #fff2c6;
 
   --secondary-font-family: "Courier New", Courier, monospace;
 }
