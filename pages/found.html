@@ -1,469 +1,995 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Found Items - UBT Lost And Found</title>
-    
+
     <!-- === Title Icon === -->
     <link rel="icon" href="../media/favicon.ico" type="image/x-icon" />
-    
+
     <!-- === CSS Links === -->
     <link rel="stylesheet" href="../css/index.css" />
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin" rel="stylesheet" />
-    
+    <link
+      href="https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin"
+      rel="stylesheet"
+    />
+
     <style>
-        /* Inline styles for Found page to minimize external CSS changes */
-        body {
-            background-image: url('../media/ChatGPT Image Nov 15, 2025, 03_01_19 PM.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            padding: 20px;
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-image: url("../media/background.png");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        padding: 0;
+        margin: 0;
+      }
+
+      /* Navbar */
+      .site-navbar {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        padding: 20px 30px;
+        margin-bottom: 40px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .site-navbar.scrolled {
+        padding: 12px 30px;
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .navbar-logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-logo img {
+        height: 50px;
+        width: auto;
+        object-fit: contain;
+        transition: all 0.3s ease;
+      }
+
+      .site-navbar.scrolled .navbar-logo img {
+        height: 35px;
+      }
+
+      .navbar-links {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .navbar-links li {
+        position: relative;
+      }
+
+      .navbar-links li:last-child::before {
+        content: '';
+        position: absolute;
+        left: -15px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 20px;
+        background: rgba(26, 26, 26, 0.2);
+      }
+
+      .navbar-links a {
+        color: rgba(26, 26, 26, 0.8);
+        text-decoration: none;
+        font-size: 1.3rem;
+        transition: color 0.3s ease;
+        white-space: nowrap;
+        position: relative;
+        display: inline-block;
+      }
+
+      .navbar-links a:not(.report-item-btn)::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+        width: 100%;
+        height: 2px;
+        background: #244082;
+        transition: transform 0.3s ease;
+      }
+
+      .navbar-links a:not(.report-item-btn):hover::after,
+      .navbar-links a:not(.report-item-btn).active::after {
+        transform: translateX(-50%) scaleX(1);
+      }
+
+      .navbar-links a:hover {
+        color: #244082;
+      }
+
+      .navbar-links a.active {
+        color: #244082;
+        font-weight: 600;
+      }
+
+      .navbar-links .report-item-btn {
+        background: #244082;
+        color: #ffffff;
+        padding: 12px 24px;
+        border-radius: 25px;
+        border: 2px solid #244082;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .navbar-links .report-item-btn::after {
+        display: none;
+      }
+
+      .navbar-links .report-item-btn:hover {
+        background: #8ca9ff;
+        border-color: #8ca9ff;
+        color: #ffffff;
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      @media (max-width: 768px) {
+        .site-navbar {
+          padding: 15px 20px;
+          margin-bottom: 30px;
         }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
+
+        .site-navbar.scrolled {
+          padding: 12px 20px;
         }
-        
-        .page-header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 40px 0;
+
+        .navbar-container {
+          flex-direction: column;
+          gap: 20px;
         }
-        
-        .page-header h1 {
-            font-size: clamp(3rem, 5vw, 4.5rem);
-            margin-bottom: 10px;
-            color: #1a1a1a;
+
+        .navbar-logo img {
+          height: 40px;
         }
-        
-        .page-header p {
-            font-size: 1.8rem;
-            color: #666;
+
+        .site-navbar.scrolled .navbar-logo img {
+          height: 32px;
         }
-        
+
+        .navbar-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 15px;
+        }
+
+        .navbar-links li:last-child::before {
+          display: none;
+        }
+
+        .navbar-links a {
+          font-size: 1.2rem;
+        }
+
+        .navbar-links .report-item-btn {
+          padding: 10px 20px;
+          font-size: 1.2rem;
+        }
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 40px 0;
+      }
+
+      .page-header h1 {
+        font-size: clamp(3rem, 5vw, 4.5rem);
+        margin-bottom: 10px;
+        color: #1a1a1a;
+      }
+
+      .page-header p {
+        font-size: 1.8rem;
+        color: #666;
+      }
+
+      .content-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 40px;
+        align-items: start;
+      }
+
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      .item-card {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 30px;
+        background: white;
+        padding: 0;
+        border-radius: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        border: 1px solid transparent;
+      }
+
+      .item-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+        border-color: rgba(36, 64, 130, 0.2);
+      }
+
+      .date-section {
+        background: #244082;
+        padding: 30px 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        border-right: 1px solid #eee;
+        border-radius: 20px 0 0 20px;
+      }
+
+      .date-day {
+        font-size: 4rem;
+        font-weight: bold;
+        line-height: 1;
+        color: #1a1a1a;
+      }
+
+      .date-month {
+        font-size: 1.2rem;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 5px;
+      }
+
+      .item-content {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 30px;
+        padding: 30px 30px 30px 0;
+      }
+
+      .item-image {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 15px;
+        transition: transform 0.3s ease, filter 0.3s ease;
+        will-change: transform;
+      }
+
+      .item-card:hover .item-image {
+        transform: scale(1.05);
+        filter: brightness(1.05);
+      }
+
+      .item-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .item-title {
+        font-size: 2.4rem;
+        font-weight: bold;
+        color: #1a1a1a;
+        margin-bottom: 15px;
+        line-height: 1.3;
+        margin-top: 0;
+      }
+
+      .item-description {
+        font-size: 1.5rem;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .item-contact {
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+      }
+
+      .contact-label {
+        font-size: 1.2rem;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+      }
+
+      .contact-info {
+        font-size: 1.5rem;
+        color: #1a1a1a;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .item-card:hover .contact-info {
+        color: #244082;
+      }
+
+      .read-more {
+        display: inline-flex;
+        align-items: center;
+        font-size: 1.4rem;
+        color: #1a1a1a;
+        font-weight: 600;
+        margin-top: 15px;
+        transition: all 0.3s ease;
+        position: relative;
+        text-decoration: none;
+      }
+
+      .read-more::before {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+        width: 100%;
+        height: 2px;
+        background: #244082;
+        transition: transform 0.3s ease;
+      }
+
+      .read-more:hover::before {
+        transform: translateX(-50%) scaleX(1);
+      }
+
+      .read-more:hover {
+        color: #244082;
+      }
+
+      .read-more:after {
+        content: "→";
+        margin-left: 8px;
+        transition: margin-left 0.3s ease, transform 0.3s ease;
+      }
+
+      .read-more:hover:after {
+        margin-left: 15px;
+        transform: translateX(3px);
+      }
+
+      @media (max-width: 1200px) {
         .content-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 40px;
-            align-items: start;
+          grid-template-columns: 1fr;
         }
-        
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-        
+      }
+
+      @media (max-width: 768px) {
         .item-card {
-            display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 30px;
-            background: white;
-            padding: 0;
-            border-radius: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
-            overflow: hidden;
+          grid-template-columns: 1fr;
         }
-        
-        .item-card:hover {
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
-        }
-        
+
         .date-section {
-            background: #244082;
-            padding: 30px 20px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            border-right: 1px solid #eee;
-            border-radius: 20px 0 0 20px;
+          flex-direction: row;
+          justify-content: center;
+          gap: 10px;
+          padding: 20px;
+          border-right: none;
+          border-bottom: 1px solid #eee;
+          border-radius: 20px 20px 0 0;
         }
-        
+
         .date-day {
-            font-size: 4rem;
-            font-weight: bold;
-            line-height: 1;
-            color: #1a1a1a;
+          font-size: 3rem;
         }
-        
-        .date-month {
-            font-size: 1.2rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 5px;
-        }
-        
+
         .item-content {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 30px;
-            padding: 30px 30px 30px 0;
+          grid-template-columns: 1fr;
+          padding: 30px 20px;
         }
-        
-        .item-image {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: 15px;
+      }
+
+      /* Pagination */
+      .pagination {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 60px auto 40px;
+        padding: 20px 30px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .pagination a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 45px;
+        height: 45px;
+        padding: 0 15px;
+        color: rgba(26, 26, 26, 0.8);
+        text-decoration: none;
+        font-size: 1.3rem;
+        font-weight: 600;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .pagination a:hover {
+        background: rgba(36, 64, 130, 0.1);
+        color: #244082;
+      }
+
+      .pagination .active {
+        background: #244082;
+        color: #ffffff;
+      }
+
+      @media (max-width: 768px) {
+        .pagination {
+          flex-wrap: wrap;
+          gap: 8px;
+          padding: 20px;
         }
-        
-        .item-details {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+
+        .pagination a {
+          min-width: 40px;
+          height: 40px;
+          font-size: 1.2rem;
+          padding: 0 12px;
         }
-        
-        .item-category {
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #8CA9FF;
-            font-weight: 600;
-            margin-bottom: 15px;
+      }
+
+      /* Footer */
+      .site-footer {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        padding: 40px 20px 30px;
+        margin-top: 60px;
+        margin-left: -20px;
+        margin-right: -20px;
+        margin-bottom: -20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+        box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .site-footer.visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .site-footer.footer-scrolled {
+        padding: 20px 20px 15px;
+      }
+
+      .site-footer.footer-scrolled .footer-container {
+        gap: 25px;
+      }
+
+      .site-footer.footer-scrolled .footer-section h1 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+      }
+
+      .site-footer.footer-scrolled .footer-section ul li a {
+        font-size: 1.1rem;
+      }
+
+      .site-footer.footer-scrolled .footer-copyright {
+        font-size: 1rem;
+        margin-bottom: 15px;
+      }
+
+      .site-footer.footer-scrolled .footer-contact p {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+      }
+
+      .site-footer.footer-scrolled .footer-social a {
+        width: 35px;
+        height: 35px;
+      }
+
+      .site-footer.footer-scrolled .footer-social svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .footer-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        gap: 40px;
+        align-items: start;
+      }
+
+      .footer-section h1 {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #1a1a1a;
+        margin-bottom: 20px;
+        margin-top: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 12px;
+      }
+
+      .footer-section ul li a {
+        color: rgba(26, 26, 26, 0.8);
+        text-decoration: none;
+        font-size: 1.3rem;
+        transition: color 0.3s ease;
+        position: relative;
+        display: inline-block;
+      }
+
+      .footer-section ul li a::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+        width: 100%;
+        height: 2px;
+        background: #244082;
+        transition: transform 0.3s ease;
+      }
+
+      .footer-section ul li a:hover::after,
+      .footer-section ul li a.active::after {
+        transform: translateX(-50%) scaleX(1);
+      }
+
+      .footer-section ul li a:hover {
+        color: #244082;
+      }
+
+      .footer-section ul li a.active {
+        color: #244082;
+        font-weight: 600;
+      }
+
+      .footer-center {
+        text-align: center;
+      }
+
+      .footer-copyright {
+        color: rgba(26, 26, 26, 0.9);
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .footer-social {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .footer-social a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(36, 64, 130, 0.1);
+        border-radius: 50%;
+        color: #244082;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .footer-social a:hover {
+        background: #244082;
+        color: #ffffff;
+        transform: translateY(-3px) scale(1.1) rotate(5deg);
+        box-shadow: 0 4px 8px rgba(36, 64, 130, 0.3);
+      }
+
+      .footer-social svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+
+      .footer-contact p {
+        color: rgba(26, 26, 26, 0.8);
+        font-size: 1.3rem;
+        margin: 0 0 12px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .footer-contact span {
+        color: #244082;
+      }
+
+      @media (max-width: 900px) {
+        .footer-container {
+          grid-template-columns: 1fr;
+          text-align: center;
+          gap: 30px;
         }
-        
-        .item-title {
-            font-size: 2.4rem;
-            font-weight: bold;
-            color: #1a1a1a;
-            margin-bottom: 15px;
-            line-height: 1.3;
-            margin-top: 0;
+
+        .footer-section {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
-        
-        .item-description {
-            font-size: 1.5rem;
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 20px;
+
+        .footer-contact p {
+          justify-content: center;
         }
-        
-        .item-contact {
-            padding-top: 15px;
-            border-top: 1px solid #eee;
+
+        .site-footer.footer-scrolled {
+          padding: 15px 15px 12px;
         }
-        
-        .contact-label {
-            font-size: 1.2rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
+
+        .site-footer.footer-scrolled .footer-container {
+          gap: 20px;
         }
-        
-        .contact-info {
-            font-size: 1.5rem;
-            color: #1a1a1a;
-            font-weight: 500;
+
+        .site-footer.footer-scrolled .footer-section h1 {
+          font-size: 1.1rem;
+          margin-bottom: 12px;
         }
-        
-        .read-more {
-            display: inline-flex;
-            align-items: center;
-            font-size: 1.4rem;
-            color: #1a1a1a;
-            font-weight: 600;
-            margin-top: 15px;
-            transition: transform 0.3s ease;
+
+        .site-footer.footer-scrolled .footer-section ul li a {
+          font-size: 1rem;
         }
-        
-        .read-more:after {
-            content: "→";
-            margin-left: 8px;
-            transition: margin-left 0.3s ease;
+
+        .site-footer.footer-scrolled .footer-copyright {
+          font-size: 0.9rem;
         }
-        
-        .item-card:hover .read-more:after {
-            margin-left: 15px;
+
+        .site-footer.footer-scrolled .footer-contact p {
+          font-size: 1rem;
         }
-        
-        .sidebar {
-            position: sticky;
-            top: 20px;
-        }
-        
-        .sidebar-section {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-        }
-        
-        .sidebar-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #1a1a1a;
-            margin-bottom: 20px;
-            text-align: center;
-            position: relative;
-            padding-bottom: 15px;
-            margin-top: 0;
-        }
-        
-        .sidebar-title:after {
-            content: "✕ ✕ ✕";
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #8CA9FF;
-            font-size: 1rem;
-            letter-spacing: 5px;
-        }
-        
-        .trending-item {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .trending-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .trending-image {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 12px;
-            flex-shrink: 0;
-        }
-        
-        .trending-content {
-            flex: 1;
-        }
-        
-        .trending-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 5px;
-            line-height: 1.3;
-            margin-top: 0;
-        }
-        
-        .trending-date {
-            font-size: 1.1rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        @media (max-width: 1200px) {
-            .content-wrapper {
-                grid-template-columns: 1fr;
-            }
-            
-            .sidebar {
-                position: static;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .item-card {
-                grid-template-columns: 1fr;
-            }
-            
-            .date-section {
-                flex-direction: row;
-                justify-content: center;
-                gap: 10px;
-                padding: 20px;
-                border-right: none;
-                border-bottom: 1px solid #eee;
-                border-radius: 20px 20px 0 0;
-            }
-            
-            .date-day {
-                font-size: 3rem;
-            }
-            
-            .item-content {
-                grid-template-columns: 1fr;
-                padding: 30px 20px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="site-navbar">
+      <div class="navbar-container">
+        <div class="navbar-logo">
+          <a href="../index.html">
+            <img src="../../Ubtlogo.png" alt="UBT Logo" />
+          </a>
+        </div>
+        <ul class="navbar-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="lost.html">Lost Items</a></li>
+          <li><a href="found.html">Found Items</a></li>
+          <li><a href="#" class="report-item-btn">Report Item</a></li>
+        </ul>
+      </div>
+    </nav>
+
     <div class="container">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1>Found Items</h1>
-            <p>Items found on campus waiting to be claimed by their owners</p>
-        </div>
-        
-        <!-- Main Content Wrapper -->
-        <div class="content-wrapper">
-            <!-- Main Content Area -->
-            <div class="main-content">
-                <!-- Item Card 1 -->
-                <article class="item-card">
-                    <div class="date-section">
-                    </div>
-                    <div class="item-content">
-                        <img src="https://images.unsplash.com/photo-1606318313737-14ad2cd70910?w=400&h=300&fit=crop" alt="Found Headphones" class="item-image">
-                        <div class="item-details">
-                            <div>
-                                <div class="item-category">Category Name</div>
-                                <p class="item-title">Lorem Ipsum Dolor Sit Amet</p>
-                                <p class="item-description">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-                                </p>
-                            </div>
-                            <div class="item-contact">
-                                <div class="contact-label">Contact to Claim</div>
-                                <div class="contact-info">user@student.ubt.edu • +383 XX XXX XXX</div>
-                                <a href="#" class="read-more">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Item Card 2 -->
-                <article class="item-card">
-                    <div class="date-section">
-                    </div>
-                    <div class="item-content">
-                        <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400&h=300&fit=crop" alt="Found USB Drive" class="item-image">
-                        <div class="item-details">
-                            <div>
-                                <div class="item-category">Category Name</div>
-                                <p class="item-title">Consectetur Adipiscing Elit</p>
-                                <p class="item-description">
-                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae.
-                                </p>
-                            </div>
-                            <div class="item-contact">
-                                <div class="contact-label">Contact to Claim</div>
-                                <div class="contact-info">user@student.ubt.edu • +383 XX XXX XXX</div>
-                                <a href="#" class="read-more">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Item Card 3 -->
-                <article class="item-card">
-                    <div class="date-section">
-                    </div>
-                    <div class="item-content">
-                        <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=300&fit=crop" alt="Found Jacket" class="item-image">
-                        <div class="item-details">
-                            <div>
-                                <div class="item-category">Category Name</div>
-                                <p class="item-title">Nemo Enim Ipsam Voluptatem</p>
-                                <p class="item-description">
-                                    Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis autem vel eum iure reprehenderit qui in ea.
-                                </p>
-                            </div>
-                            <div class="item-contact">
-                                <div class="contact-label">Contact to Claim</div>
-                                <div class="contact-info">user@student.ubt.edu • +383 XX XXX XXX</div>
-                                <a href="#" class="read-more">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Item Card 4 -->
-                <article class="item-card">
-                    <div class="date-section">
-                    </div>
-                    <div class="item-content">
-                        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=300&fit=crop" alt="Found Notebook" class="item-image">
-                        <div class="item-details">
-                            <div>
-                                <div class="item-category">Category Name</div>
-                                <p class="item-title">Quis Autem Vel Eum Iure</p>
-                                <p class="item-description">
-                                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate.
-                                </p>
-                            </div>
-                            <div class="item-contact">
-                                <div class="contact-label">Contact to Claim</div>
-                                <div class="contact-info">user@student.ubt.edu • +383 XX XXX XXX</div>
-                                <a href="#" class="read-more">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Item Card 5 -->
-                <article class="item-card">
-                    <div class="date-section">
-                    </div>
-                    <div class="item-content">
-                        <img src="https://images.unsplash.com/photo-1509395062183-67c5ad6faff9?w=400&h=300&fit=crop" alt="Found Watch" class="item-image">
-                        <div class="item-details">
-                            <div>
-                                <div class="item-category">Category Name</div>
-                                <p class="item-title">Temporibus Autem Quibusdam</p>
-                                <p class="item-description">
-                                    Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.
-                                </p>
-                            </div>
-                            <div class="item-contact">
-                                <div class="contact-label">Contact to Claim</div>
-                                <div class="contact-info">user@student.ubt.edu • +383 XX XXX XXX</div>
-                                <a href="#" class="read-more">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            
-            <!-- Sidebar -->
-            <!-- Commented out for later use - Recently Found sidebar
-            <aside class="sidebar">
-                <div class="sidebar-section">
-                    <p class="sidebar-title">Recently Found</p>
-                    
-                    <div class="trending-item">
-                        <img src="https://images.unsplash.com/photo-1606318313737-14ad2cd70910?w=100&h=100&fit=crop" alt="Recent" class="trending-image">
-                        <div class="trending-content">
-                            <p class="trending-title">Lorem Ipsum Dolor Sit</p>
-                            <p class="trending-date">13 NOV 2025</p>
-                        </div>
-                    </div>
-                    
-                    <div class="trending-item">
-                        <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=100&h=100&fit=crop" alt="Recent" class="trending-image">
-                        <div class="trending-content">
-                            <p class="trending-title">Consectetur Adipiscing</p>
-                            <p class="trending-date">12 NOV 2025</p>
-                        </div>
-                    </div>
-                    
-                    <div class="trending-item">
-                        <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=100&h=100&fit=crop" alt="Recent" class="trending-image">
-                        <div class="trending-content">
-                            <p class="trending-title">Nemo Enim Ipsam</p>
-                            <p class="trending-date">11 NOV 2025</p>
-                        </div>
-                    </div>
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1>Found Items</h1>
+        <p>Items found on campus waiting to be claimed</p>
+      </div>
+
+      <!-- Main Content Wrapper -->
+      <div class="content-wrapper">
+        <!-- Main Content Area -->
+        <div class="main-content">
+          <!-- Item Card 1 -->
+          <article class="item-card">
+            <div class="date-section"></div>
+            <div class="item-content">
+              <img
+                src="https://images.unsplash.com/photo-1606318313737-14ad2cd70910?w=400&h=300&fit=crop"
+                alt="Found Headphones"
+                class="item-image"
+              />
+              <div class="item-details">
+                <div>
+                  <p class="item-title">Lorem Ipsum Dolor Sit Amet</p>
+                  <p class="item-description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris.
+                  </p>
                 </div>
-            </aside>
-            -->
+                <div class="item-contact">
+                  <div class="contact-label">Contact to Claim</div>
+                  <div class="contact-info">
+                    user@student.ubt.edu • +383 XX XXX XXX
+                  </div>
+                  <a href="detail.html?type=found&id=1" class="read-more">View Details</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Item Card 2 -->
+          <article class="item-card">
+            <div class="date-section"></div>
+            <div class="item-content">
+              <img
+                src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400&h=300&fit=crop"
+                alt="Found USB Drive"
+                class="item-image"
+              />
+              <div class="item-details">
+                <div>
+                  <p class="item-title">Consectetur Adipiscing Elit</p>
+                  <p class="item-description">
+                    Sed ut perspiciatis unde omnis iste natus error sit
+                    voluptatem accusantium doloremque laudantium, totam rem
+                    aperiam eaque ipsa quae ab illo inventore veritatis et quasi
+                    architecto beatae.
+                  </p>
+                </div>
+                <div class="item-contact">
+                  <div class="contact-label">Contact to Claim</div>
+                  <div class="contact-info">
+                    user@student.ubt.edu • +383 XX XXX XXX
+                  </div>
+                  <a href="detail.html?type=found&id=2" class="read-more">View Details</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Item Card 3 -->
+          <article class="item-card">
+            <div class="date-section"></div>
+            <div class="item-content">
+              <img
+                src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=300&fit=crop"
+                alt="Found Jacket"
+                class="item-image"
+              />
+              <div class="item-details">
+                <div>
+                  <p class="item-title">Nemo Enim Ipsam Voluptatem</p>
+                  <p class="item-description">
+                    Ut enim ad minima veniam, quis nostrum exercitationem ullam
+                    corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
+                    consequatur. Quis autem vel eum iure reprehenderit qui in
+                    ea.
+                  </p>
+                </div>
+                <div class="item-contact">
+                  <div class="contact-label">Contact to Claim</div>
+                  <div class="contact-info">
+                    user@student.ubt.edu • +383 XX XXX XXX
+                  </div>
+                  <a href="detail.html?type=found&id=3" class="read-more">View Details</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Item Card 4 -->
+          <article class="item-card">
+            <div class="date-section"></div>
+            <div class="item-content">
+              <img
+                src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=300&fit=crop"
+                alt="Found Notebook"
+                class="item-image"
+              />
+              <div class="item-details">
+                <div>
+                  <p class="item-title">Quis Autem Vel Eum Iure</p>
+                  <p class="item-description">
+                    At vero eos et accusamus et iusto odio dignissimos ducimus
+                    qui blanditiis praesentium voluptatum deleniti atque
+                    corrupti quos dolores et quas molestias excepturi sint
+                    occaecati cupiditate.
+                  </p>
+                </div>
+                <div class="item-contact">
+                  <div class="contact-label">Contact to Claim</div>
+                  <div class="contact-info">
+                    user@student.ubt.edu • +383 XX XXX XXX
+                  </div>
+                  <a href="detail.html?type=found&id=4" class="read-more">View Details</a>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
+      </div>
+
+      <!-- Pagination -->
+      <div style="display: flex; justify-content: center;">
+        <div class="pagination">
+          <a href="found.html?page=1" class="active">1</a>
+          <a href="found.html?page=2">2</a>
+          <a href="found.html?page=3">3</a>
+          <a href="found.html?page=4">4</a>
+        </div>
+      </div>
     </div>
-    
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <!-- Site Links -->
+        <div class="footer-section">
+          <h1>Site</h1>
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="lost.html">Lost</a></li>
+            <li><a href="found.html">Found</a></li>
+          </ul>
+        </div>
+
+        <!-- Center - Copyright & Social -->
+        <div class="footer-section footer-center">
+          <p class="footer-copyright">
+            © Copyright 2025 UBT Lost and Found<br />
+            All Rights Reserved
+          </p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-section footer-contact">
+          <h1>Contact</h1>
+          <p><span>Tel:</span> +383 XX XXX XXX</p>
+          <p><span>Email:</span> contact@ubt-uni.net</p>
+        </div>
+      </div>
+    </footer>
+
     <!-- === JS Links === -->
     <script type="module" src="../js/index.js"></script>
-</body>
-</html>
+    
+    <!-- Navbar Enhancement Script -->
+    <script>
+      const navbar = document.querySelector('.site-navbar');
+      const footer = document.querySelector('.site-footer');
 
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+        
+        if (!footer) return;
+        const windowH = window.innerHeight;
+        const scrollY = window.scrollY;
+        const totalH = document.documentElement.scrollHeight;
+        const dist = totalH - (windowH + scrollY);
+        const isBottom = windowH + scrollY >= totalH - 30;
+        
+        if (dist <= 200) {
+          footer.classList.add('visible');
+          if (isBottom || dist <= 30) {
+            footer.classList.remove('footer-scrolled');
+          } else {
+            footer.classList.add('footer-scrolled');
+          }
+        } else {
+          footer.classList.remove('visible', 'footer-scrolled');
+        }
+      });
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const page = window.location.pathname;
+        
+        // check navbar
+        document.querySelectorAll('.navbar-links a').forEach(link => {
+          link.classList.remove('active');
+          const href = link.getAttribute('href');
+          if (page.includes('lost.html') && (href.includes('lost.html') || href === 'lost.html')) {
+            link.classList.add('active');
+          } else if (page.includes('found.html') && (href.includes('found.html') || href === 'found.html')) {
+            link.classList.add('active');
+          } else if ((page.endsWith('/index.html') || page.endsWith('/') || page.includes('index.html')) && (href.includes('index.html') || href === '../index.html' || href === 'index.html')) {
+            link.classList.add('active');
+          }
+        });
+        
+        // check footer
+        document.querySelectorAll('.footer-section ul li a').forEach(link => {
+          link.classList.remove('active');
+          const href = link.getAttribute('href');
+          if (page.includes('lost.html') && (href.includes('lost.html') || href === 'lost.html')) {
+            link.classList.add('active');
+          } else if (page.includes('found.html') && (href.includes('found.html') || href === 'found.html')) {
+            link.classList.add('active');
+          } else if ((page.endsWith('/index.html') || page.endsWith('/') || page.includes('index.html')) && (href.includes('index.html') || href === '../index.html' || href === 'index.html')) {
+            link.classList.add('active');
+          }
+        });
+        
+        // pagination
+        const params = new URLSearchParams(window.location.search);
+        const pageNum = parseInt(params.get('page')) || 1;
+        document.querySelectorAll('.pagination a').forEach(link => {
+          link.classList.remove('active');
+          const href = link.getAttribute('href');
+          if (href && href.includes(`page=${pageNum}`)) {
+            link.classList.add('active');
+          }
+        });
+        
+        if (footer) {
+          const dist = document.documentElement.scrollHeight - (window.innerHeight + window.scrollY);
+          const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 30;
+          if (dist <= 200) {
+            footer.classList.add('visible');
+            if (isBottom || dist <= 30) {
+              footer.classList.remove('footer-scrolled');
+            } else {
+              footer.classList.add('footer-scrolled');
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
