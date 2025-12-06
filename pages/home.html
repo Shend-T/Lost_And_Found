@@ -3,19 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home - Lost & Found</title>
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
     <nav>
-        <a href="#"><img src="/img/download.png" alt="logo" id="logo"></a>
+        <a href="home.html"><img src="../img/download.png" alt="logo" id="logo"></a>
 
         <div class="nav-icons">
-            <a href="#home"><img src="/img/home.png" alt="home"></a>
-            <a href="#"><img src="/img/found.png" alt="found"></a>
-            <a href="#"><img src="/img/lost.png" alt="lost"></a>
-            <a href="#"><img src="/img/user.png" alt="user"></a>
+            <a href="home.html" class="nav-icon active"><img src="../img/home.png" alt="home"></a>
+            <a href="found.html" class="nav-icon"><img src="../img/found.png" alt="found"></a>
+            <a href="lost.html" class="nav-icon"><img src="../img/lost.png" alt="lost"></a>
+            <a href="user.html" class="nav-icon"><img src="../img/user.png" alt="user"></a>
         </div>
     </nav>
+
+    <div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Lost Something? Found Something?</h1>
+            <p class="hero-subtitle">We help reunite lost items with their owners. Report lost or found items and browse listings to find what you're looking for.</p>
+            <div class="hero-buttons">
+                <a href="lost.html" class="btn btn-primary">Report Lost Item</a>
+                <a href="found.html" class="btn btn-secondary">Report Found Item</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="/img/362f63b7e203b461a7cd01ec87130c4edcd532c34500c48717e0d34a39e1988a.jpg" alt="Lost and Found">
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stat-card">
+            <div class="stat-number">1,245</div>
+            <div class="stat-label">Items Found</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">856</div>
+            <div class="stat-label">Items Reunited</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">389</div>
+            <div class="stat-label">Active Listings</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">2,150+</div>
+            <div class="stat-label">Registered Users</div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Report</h3>
+                <p>Report a lost or found item with details and photos. The more information you provide, the easier it is to match items.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Browse</h3>
+                <p>Search through listings or browse by category. Filter by location, date, or item type to find what you're looking for.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Connect</h3>
+                <p>Contact the owner or finder through our secure messaging system. Verify ownership and arrange a safe meeting place.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Reunite</h3>
+                <p>Successfully reunite items with their owners! Mark items as returned and share your success story with our community.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Listings Section -->
+    <section class="recent-listings">
+        <h2>Recent Listings</h2>
+        <div class="listings-grid">
+            <div class="listing-card lost">
+                <div class="listing-badge lost-badge">LOST</div>
+                <img src="/img/download.png" alt="Lost Item" class="listing-image">
+                <div class="listing-info">
+                    <h3>Missing Wallet</h3>
+                    <p class="listing-location">📍 Campus Building A</p>
+                    <p class="listing-date">Lost 2 days ago</p>
+                    <p class="listing-description">Black leather wallet with ID cards. Last seen near cafeteria.</p>
+                </div>
+                <a href="ViewDetails.html" class="listing-link">View Details</a>
+            </div>
+            <div class="listing-card found">
+                <div class="listing-badge found-badge">FOUND</div>
+                <img src="/img/download.png" alt="Found Item" class="listing-image">
+                <div class="listing-info">
+                    <h3>Found Keys</h3>
+                    <p class="listing-location">📍 Parking Lot B</p>
+                    <p class="listing-date">Found 1 day ago</p>
+                    <p class="listing-description">Set of keys with keychain. Please describe to claim.</p>
+                </div>
+                <a href="ViewDetails.html" class="listing-link">View Details</a>
+            </div>
+            <div class="listing-card lost">
+                <div class="listing-badge lost-badge">LOST</div>
+                <img src="/img/download.png" alt="Lost Item" class="listing-image">
+                <div class="listing-info">
+                    <h3>Missing Backpack</h3>
+                    <p class="listing-location">📍 Library</p>
+                    <p class="listing-date">Lost 3 days ago</p>
+                    <p class="listing-description">Blue backpack with laptop and books inside.</p>
+                </div>
+                <a href="ViewDetails.html" class="listing-link">View Details</a>
+            </div>
+            <div class="listing-card found">
+                <div class="listing-badge found-badge">FOUND</div>
+                <img src="/img/download.png" alt="Found Item" class="listing-image">
+                <div class="listing-info">
+                    <h3>Found Phone</h3>
+                    <p class="listing-location">📍 Student Center</p>
+                    <p class="listing-date">Found today</p>
+                    <p class="listing-description">Smartphone found in the student center. Locked screen.</p>
+                </div>
+                <a href="ViewDetails.html" class="listing-link">View Details</a>
+            </div>
+        </div>
+        <div class="view-all">
+            <a href="lost.html" class="btn btn-outline">View All Listings</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Why Choose Us?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Easy Search</h3>
+                <p>Powerful search filters help you find items quickly by location, category, and date.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📸</div>
+                <h3>Photo Verification</h3>
+                <p>Upload photos of items for better identification and verification of ownership.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure Messaging</h3>
+                <p>Safe and private communication between users to verify details and arrange pickup.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Quick Notifications</h3>
+                <p>Get instant alerts when new matching items are posted or when someone contacts you.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Local Focus</h3>
+                <p>Connect with people in your area. Perfect for campus and community lost & found.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>Verified Users</h3>
+                <p>Trusted community with verified accounts to ensure safe and legitimate transactions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Ready to Get Started?</h2>
+            <p>Join our community and help reunite lost items with their owners. Every item matters!</p>
+            <div class="cta-buttons">
+                <a href="lost.html" class="btn btn-primary">Report Lost Item</a>
+                <a href="found.html" class="btn btn-secondary">Browse Listings</a>
+            </div>
+        </div>
+    </section>
+    </div>
 </body>
 </html>
