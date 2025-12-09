@@ -1,14 +1,14 @@
 # 📦 UBT Lost & Found – Website për Humbje dhe Gjetje Sendesh
 
-Ky projekt është një **faqe interneti për humbje dhe gjetje sendesh**, e ndërtuar si pjesë e një detyre grupi për universitetin. Qëllimi i faqes është të ndihmojë studentët dhe stafin e universitetit të publikojnë njoftime për sende të humbura ose të gjetura, në mënyrë që pronarët e tyre t’i gjejnë më lehtë.
+Ky projekt është një **faqe interneti për të gjetur gjërat e humbura në kampus**, e ndërtuar si pjesë e një detyre grupi për universitetin. Qëllimi i faqes është të ndihmojë studentët dhe stafin e universitetit të publikojnë njoftime për sende të humbura ose të gjetura, në mënyrë që pronarët e tyre t’i gjejnë më lehtë.
 
 ---
 
 ## 👥 Anëtarët e Grupit
 
-- Shend Tytynxhiu - ID: 242573278
-- Ekloan Kalludra - ID: 2425
-- Andre Rasi - ID: 2425
+- Shend Tytynxhiu - ID: 242573278, st73278@ubt-uni.net
+- Ekloan Kalludra - ID: 242573584, ek73584@ubt-uni.net
+- Andre Rasi - ID: 242573800, email: ar73800@ubt-uni.net
 
 ---
 
@@ -40,11 +40,6 @@ Projekti është ndërtuar duke përdorur vetëm teknologjitë bazike të zhvill
    git clone https://github.com/Shend-T/Lost_And_Found.git
    ```
 2. Hap 'folder-in' e projektit:
-3. Hap 'file-in' `index.html` ne 'browser-in' tuaj përmes një serveri lokal (p.sh. XAMPP ose WAMP).
+3. Hap 'file-in' `php/index.php` ne 'browser-in' tuaj përmes një serveri lokal (p.sh. XAMPP).
 
 ---
-
-## 🧠 Qëllimi i Projektit
-
-Ky projekt synon të zhvillojë aftësitë praktike të studentëve në ndërtimin e faqeve web duke përdorur teknologjitë bazë front-end dhe (opsionalisht) PHP për anën e serverit.
-Ai gjithashtu inkurajon punën në grup dhe menaxhimin e projekteve në GitHub.

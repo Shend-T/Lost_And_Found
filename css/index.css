@@ -19,10 +19,13 @@
 
 html {
   font-size: 62.5%; /* 1rem = 10px */
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: "Ubuntu", sans-serif;
+
+  background-image: url(../media/background.png);
 }
 
 /* === Text === */
@@ -43,6 +46,17 @@ a {
 
 a:hover {
   color: var(--secondary-text-color);
+}
+
+.button {
+  display: block;
+  padding: 10px 20px;
+  color: var(--color-accent);
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: 10px;
+  margin: 10px;
+  max-width: 60px;
 }
 
 img {
@@ -70,4 +84,124 @@ img {
 
 .hidden {
   display: none;
+}
+
+/* Navbar container */
+nav {
+  background: linear-gradient(135deg, #244082 0%, #1a3361 80%);
+  position: fixed;
+
+  top: 0px;
+
+  height: 65px;
+  width: 100vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 30px;
+  /* box-sizing: border-box; */
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#logo {
+  height: 40px;
+  width: auto;
+  margin-left: 20px;
+  transition: transform 0.3s ease;
+  border-radius: 8px;
+}
+
+#logo:hover {
+  transform: scale(1.05);
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-right: 20px;
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.nav-icon img {
+  height: 26px;
+  width: 26px;
+  filter: brightness(0) invert(1);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+/* Active state - White circle for home icon */
+.nav-icon.active {
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.nav-icon.active img {
+  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%)
+    hue-rotate(200deg) brightness(98%) contrast(96%);
+  transform: scale(1.1);
+}
+
+/* Hover effects for non-active icons */
+.nav-icon:not(.active):hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.nav-icon:not(.active):hover img {
+  filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+  transform: scale(1.15);
+}
+
+@media (max-width: 640px) {
+  nav {
+    height: 60px;
+    /* padding: 0 15px; */
+  }
+  #logo {
+    height: 35px;
+    margin-left: 10px;
+  }
+
+  .nav-icons {
+    gap: 10px;
+    margin-right: 10px;
+  }
+
+  .nav-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .nav-icon img {
+    height: 20px;
+    width: 20px;
+  }
+}
+@media (max-width: 400px) {
+  .logo {
+    display: none;
+  }
+  .nav-icons {
+    width: 100%;
+    justify-content: space-around;
+  }
+  .nav-icons .hidden {
+    display: block;
+  }
 }

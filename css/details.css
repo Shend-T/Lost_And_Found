@@ -1,0 +1,148 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #244082;
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.back-button::before {
+  content: "←";
+  font-size: 1.6rem;
+  transition: transform 0.3s ease;
+}
+
+.back-button:hover::before {
+  transform: translateX(-5px);
+}
+
+.back-button:hover {
+  color: #8ca9ff;
+}
+
+.detail-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  width: 60%;
+}
+
+.detail-image-container {
+  /* width: 100%; */
+  height: 80%;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.detail-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.detail-content {
+  padding: 40px;
+}
+
+.detail-title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.detail-description {
+  font-size: 1.6rem;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+.detail-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.detail-info-item {
+  padding: 20px;
+  background: rgba(36, 64, 130, 0.05);
+  border-radius: 12px;
+}
+
+.detail-info-label {
+  font-size: 1.1rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.detail-info-value {
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.detail-contact {
+  padding: 30px;
+  background: rgba(36, 64, 130, 0.05);
+  border-radius: 15px;
+  margin-top: 30px;
+}
+
+.detail-contact-label {
+  font-size: 1.3rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.detail-contact-info {
+  font-size: 1.8rem;
+  color: #244082;
+  font-weight: 600;
+}
+
+@media (max-width: 1000px) {
+  .detail-card {
+    width: 80%;
+  }
+  .detail-image-container {
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .detail-image {
+    height: 300px;
+  }
+
+  .detail-content {
+    padding: 30px 20px;
+  }
+
+  .detail-info-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

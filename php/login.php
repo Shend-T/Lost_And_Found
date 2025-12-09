@@ -1,4 +1,45 @@
 <?php
+include "db.php";
+
+if (isset($_COOKIE["user_username"]) and isset($_COOKIE["user_id"])) {
+    header("Location: index.php");
+    exit();
+}
+
+if (isset($_POST['submit'])) {
+    $id = $_POST['id'];
+    $password = $_POST['password'];
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "SELECT * FROM users WHERE ID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+        $correct_password = password_verify($password, $user["Password"]);
+        if ($correct_password) {
+            setcookie("user_username", $user['Username'], time() + 3600 * 24 * 10);
+            setcookie("user_id", $user['ID'], time() + 3600 * 24 * 10);
+            
+            $stmt->close();
+            $conn->close();
+
+            header("Location: index.php");
+            exit();
+        } else {
+            $message = "Incorrect Password!";
+        
+        echo "<script>alert('$message');</script>";
+        }
+    } else {
+        $message = "User with your ID doesn't exist!";
+        
+        echo "<script>alert('$message');</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +62,7 @@
 </head>
 <body>
     <div class="container flex center">
-        <div class="paper glass flex">
+        <div class="paper flex">
             <div class="form-header flex center-h">
                 <h1>Welcome back!</h1>
                 <p>Please enter you're login info...</p>
@@ -29,20 +70,30 @@
             <hr>
 
             <div class="form-container flex center">
-                <form class="form flex center-v" action="">
-                    <label for="username">Username: </label>
-                    <input type="text" name="username" >
+                <form class="form flex center-v" action="" method="POST">
+                    <label for="id">Student ID: </label>
+                    <input type="number" name="id" id="id" >
 
                     <label for="password">Password:</label>
                     <input type="password" name="password">
 
-                    <input type="submit" value="Log In">
+                    <input type="submit" name="submit" value="Log In">
                 </form>
 
                 <br />
-                <p>Don't Have An Account? <a href="#">Sign Up</a></p>
+                <p>Don't Have An Account? <a href="signup.php">Sign Up</a></p>
             </div>
         </div>
     </div>
+
+    <script>
+    const numberInput = document.getElementById('id');
+
+    numberInput.addEventListener('keypress', function(event) {
+        if (event.key < '0' || event.key > '9') {
+        event.preventDefault();
+        }
+    });
+    </script>
 </body>
 </html>
