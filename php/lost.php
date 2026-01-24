@@ -1,6 +1,6 @@
 <?php 
 include "db.php";
-$sql = "SELECT title, image, number, description, type, user_id FROM posts WHERE description = 1";
+$sql = "SELECT id, title, image, number, description, type, user_id FROM posts WHERE type = 0";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
@@ -63,7 +63,7 @@ $result = $conn->query($sql);
                             <div class="contact-info">
                               +383 <?php echo $row['number'] ?>
                             </div>
-                          <a href="details.php" class="read-more">Shiko Detajet</a>
+                          <a href="details.php?id=<?= $row['id'] ?>" class="read-more">Shiko Detajet</a>
                         </div>
                       </div>
                     </div>

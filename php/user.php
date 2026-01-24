@@ -19,21 +19,23 @@ if (isset($_POST['submit'])) {
     $tmpName = $_FILES['image']['tmp_name'];
     $fileName = $_FILES['image']['name'];
     $fileType = $_FILES['image']['type'];
+    $date = date('Y-m-d');
 
     // Read the binary data from the temporary file
     $imageData = file_get_contents($tmpName);
 
-    $sql = "INSERT INTO posts (title, image, number, description, type, user_id) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO posts (title, image, number, description, type, user_id, date) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     
     $stmt->bind_param(
-        "sbisii", 
+        "sbisiis", 
         $title, 
         $imageData, 
         $phone_num, 
         $desc, 
         $type,
-        $user_id);
+        $user_id,
+        $date);
     $stmt->send_long_data(1, $imageData);
     // $stmt->send_long_data(1, $imageBlob);
 

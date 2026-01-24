@@ -1,4 +1,33 @@
-<?php ?>
+<?php 
+include "db.php";
+
+// Marrim id, nga url. Nese ska ateher vleren e merr 0( shiko if-in posht)
+$post_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Shikojme se a eshte valid id-ja ne fjale
+if ($post_id <= 0) {
+  // die("Post ID nuk është valid!");
+
+  // Nuk isha i sigurt se a me perdor die() apo veq me ndrru URL-in
+  header("Location: index.php");
+}
+
+// Tash qe u sigurum qe id-ja esht valide, e marrim postin nga db
+$sql = "SELECT * FROM posts WHERE id = " . intval($post_id); // intval sepse post_id llogaritet te jet string
+$result = $conn->query($sql);
+
+if (!$result || $result->num_rows === 0) {
+  die("Post not found"); // 'Sanity' 'check'-i fundit, nese rastsisht user-i ka shkru url vet, per ni post qe nuk ekziston
+}
+$post = $result->fetch_assoc();
+
+$imgInfo = getimagesizefromstring($post['image']);
+$mime = $imgInfo['mime']; // marrim formatin e imazhit: "image/png", "image/jpeg", "image/webp", etj
+
+// Pasi qe imazhi esht ruajtur si 'blob', e konvertojm ne imazh
+$imageData = base64_encode($post['image']);
+$imageSrc = "data:$mime;base64,$imageData"; // tash e kemi src-ne e imazhit
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,30 +51,35 @@
 </head>
 <body>
     <div class="container">
-      <a href="lost.php" class="back-button" id="backButton">Back</a>
+      <a href="index.php" class="back-button" id="backButton">Kthehu</a>
 
       <div class="detail-card">
         <div class="detail-image-container">
-          <img src="../media/image_256.png" alt="Item Image" class="detail-image" id="detailImage" />
+          <img 
+            src="<?php echo $imageSrc; ?>"
+            alt="<?php echo $post['title']; 
+                  // alt's i kemi perdor per "SEO", edhe pse esht vetem projekt qe me probabilitet tmadh nuk do te behet publik. ?>"
+            class="detail-image"
+            id="detailImage" />
         </div>
         <div class="detail-content">
-          <h1 class="detail-title" id="detailTitle">Item Title</h1>
+          <h1 class="detail-title" id="detailTitle"><?php echo $post['title'] ?></h1>
           <p class="detail-description" id="detailDescription">
-            Item description will appear here.
+            <?php echo $post['description'] ?>
           </p>
 
           <div class="detail-info-grid">
             <div class="detail-info-item">
-              <div class="detail-info-label">Date</div>
-              <div class="detail-info-value" id="detailDate">12 NOV 2025</div>
+              <div class="detail-info-label">Data e postimit</div>
+              <div class="detail-info-value" id="detailDate"><?php echo $post['date'] ?></div>
             </div>
 
           </div>
 
           <div class="detail-contact">
-            <div class="detail-contact-label" id="contactLabel">Contact</div>
+            <div class="detail-contact-label" id="contactLabel">Kontakti</div>
             <div class="detail-contact-info" id="detailContact">
-               +383 XX XXX XXX
+               +383 <?php echo $post['number'] ?>
             </div>
           </div>
         </div>

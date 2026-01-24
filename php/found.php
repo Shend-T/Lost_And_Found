@@ -1,9 +1,9 @@
 <?php
 include "db.php";
 
-// Na duhet ti marrim te gjitha postet( description=0, do te thot postet
+// Na duhet ti marrim te gjitha postet( description=1, do te thot postet
 // ku jane gjetur sendet e humbura)
-$sql = "SELECT title, image, number, description, type, user_id FROM posts WHERE description = 0";
+$sql = "SELECT id, title, image, number, description, type, user_id FROM posts WHERE type = 1";
 $result = $conn->query($sql);
 ?>
 
@@ -67,7 +67,7 @@ $result = $conn->query($sql);
                             <div class="contact-info">
                               +383 <?php echo $row['number'] ?>
                             </div>
-                          <a href="details.php" class="read-more">Shiko Detajet</a>
+                          <a href="details.php?id=<?= $row['id'] ?>" class="read-more">Shiko Detajet</a>
                         </div>
                       </div>
                     </div>
