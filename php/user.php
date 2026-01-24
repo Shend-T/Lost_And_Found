@@ -1,17 +1,17 @@
 <?php
 include "db.php";
 
-// if (!(isset($_COOKIE["user_username"]) and isset($_COOKIE["user_id"]))) {
-//     header("Location: index.php");
-//     exit();
-// }
+if (!(isset($_COOKIE["user_username"]) and isset($_COOKIE["user_id"]))) {
+    header("Location: login.php");
+    exit();
+}
 
-// $name = $_COOKIE["user_username"];
-$name = "USER";
+$name = $_COOKIE["user_username"];
+$user_id = (int) $_COOKIE["user_id"]; //Sepse ne cookie, user_id eshte string
+// $name = "USER";
 
 if (isset($_POST['submit'])) {
     $title     = $_POST["title"];
-    // $imageBlob = file_get_contents($_FILES['image']['image']);
     $phone_num = $_POST["phone_number"];
     $desc      = $_POST["description"];
     $type      = ($_POST['item'] === "lost") ? 1 : 0;
@@ -23,10 +23,17 @@ if (isset($_POST['submit'])) {
     // Read the binary data from the temporary file
     $imageData = file_get_contents($tmpName);
 
-    $sql = "INSERT INTO posts (title, image, number, description, type) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO posts (title, image, number, description, type, user_id) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     
-    $stmt->bind_param("sbisi", $title, $imageData, $phone_num, $desc, $type);
+    $stmt->bind_param(
+        "sbisii", 
+        $title, 
+        $imageData, 
+        $phone_num, 
+        $desc, 
+        $type,
+        $user_id);
     $stmt->send_long_data(1, $imageData);
     // $stmt->send_long_data(1, $imageBlob);
 

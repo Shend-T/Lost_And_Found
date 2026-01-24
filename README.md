@@ -23,6 +23,12 @@ Projekti është ndërtuar duke përdorur vetëm teknologjitë bazike të zhvill
 
 ---
 
+## 🔎 Pershkrim i Kodit
+
+Ne cdo `folder` gjendet njw `README.md`, ku shpjegohet struktura e `file-ave` mw detajisht.
+
+---
+
 ## ⚙️ Funksionalitetet Kryesore
 
 - Publikimi i njoftimeve për sende të **humbura** ose **të gjetura**
