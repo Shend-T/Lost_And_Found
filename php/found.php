@@ -1,4 +1,11 @@
-<?php ?>
+<?php
+include "db.php";
+
+// Na duhet ti marrim te gjitha postet( description=0, do te thot postet
+// ku jane gjetur sendet e humbura)
+$sql = "SELECT title, image, number, description, type, user_id FROM posts WHERE description = 0";
+$result = $conn->query($sql);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,18 +30,55 @@
   <body>
     <div id="nav-placeholder"></div>
     <div class="container">
-      <!-- Page Header -->
+      <!-- Header -->
       <div class="page-header">
         <h1>Found Items</h1>
         <p>Items found on campus waiting to be claimed</p>
       </div>
 
-      <!-- Main Content Wrapper -->
       <div class="content-wrapper">
-        <!-- Main Content Area -->
         <div class="main-content">
-          <!-- Item Card 1 -->
-          <article class="item-card">
+            <?php if ($result->num_rows > 0): ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                  <article class="item-card">
+                    <div class="date-section"></div>
+                    <div class="item-content">
+                      <?php
+                        // Get image info from blob
+                        $imgInfo = getimagesizefromstring($row['image']);
+                        $mime = $imgInfo['mime'];
+                        
+                        // Convert blob to base64
+                        $imageData = base64_encode($row['image']);
+                        $imageSrc = "data:$mime;base64,$imageData";
+                        ?>
+                      <img
+                        src="<?php echo $imageSrc; ?>"
+                        alt="<?php echo $row['title']; ?>"
+                        class="item-image"
+                      />
+                      <div class="item-details">
+                        <div>
+                          <p class="item-title"><?php echo $row['title'] ?></p>
+                          <p class="item-description"><?php echo $row['description'] ?></p>
+                        </div>
+                        <div class="item-contact">
+                          <div class="contact-label">Kontakti</div>
+                            <div class="contact-info">
+                              +383 <?php echo $row['number'] ?>
+                            </div>
+                          <a href="details.php" class="read-more">Shiko Detajet</a>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                <?php endwhile; ?>
+            <?php else: ?>
+              <h1>Nuk ka poste momentalisht.</h1>
+            <?php endif; ?>
+
+            <!-- Kodi i komentuar ishte si baze -->
+          <!-- <article class="item-card">
             <div class="date-section"></div>
             <div class="item-content">
               <img
@@ -61,7 +105,7 @@
                 </div>
               </div>
             </div>
-          </article>
+          </article> -->
         </div>
       </div>
 

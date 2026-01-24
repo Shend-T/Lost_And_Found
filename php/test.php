@@ -1,6 +1,6 @@
 <?php 
 include "db.php";
-$sql = "SELECT title, image, number, description, type FROM posts WHERE id = 3";
+$sql = "SELECT title, image, number, description, type, user_id FROM posts WHERE id = 1";
 $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {
@@ -17,6 +17,11 @@ if ($result && $result->num_rows > 0) {
     // Convert blob to base64 image data
     $imageData = base64_encode($row['image']);
     $imageSrc = "data:$mime;base64,$imageData";
+
+    $sql_user = "SELECT Username FROM users WHERE id = " . $row['user_id'];
+    $result_user = $conn->query($sql_user);
+    
+    $user_id = $result_user->fetch_assoc()['Username'];
 } else {
     die("Post not found.");
 }
@@ -39,6 +44,8 @@ if ($result && $result->num_rows > 0) {
 <p>Description: <?php echo $description; ?></p>
 
 <p>Type: <?php echo ($type == 1 ? "Found a lost item" : "Reporting a lost item"); ?></p>
+
+<p>User that made the post: <?php echo $user_id ?></p>
 
 </body>
 </html>
