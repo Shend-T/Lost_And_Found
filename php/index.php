@@ -108,20 +108,39 @@ include 'db.php';
         <section class="recent-listings">
             <h2>Recent Listings</h2>
             <div class="listings-grid">
-                <div class="listing-card found">
-                    <div class="listing-badge found-badge">E GJETUR</div>
-                    <img src="../media/image_256.png" alt="Lost Item" class="listing-image">
-                    <div class="listing-info">
-                        <h3>Kulete e humbur</h3>
-                        <p class="listing-location">📍 UBT Dukagjini Salla 130</p>
-                        <p class="listing-date">30 Nentor 2025</p>
-                        <p class="listing-description">Nje kulet e humbur ne sallen 130 ne rreshtin e pare.</p>
-                    </div>
-                    <a href="details.php" class="listing-link">View Details</a>
-                </div>
+                <?php 
+                    $sql = "SELECT * FROM posts ORDER BY date DESC";
+                    $result = $conn->query($sql);
+                ?>
+
+                <?php if ($result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <div class="listing-card <?php echo ($row['type'] == 1) ? 'lost' : 'found'; ?>">
+                            <div class="listing-badge <?php echo ($row['type'] == 1) ? 'lost' : 'found'; ?>-badge">
+                                <?php echo ($row['type'] == 1) ? 'E HUMBUR' : 'E GJETUR'; ?>
+                            </div>
+                    
+                            <?php
+                                $imgInfo = getimagesizefromstring($row['image']);
+                                $mime = $imgInfo['mime'];
+
+                                $imageData = base64_encode($row['image']);
+                                $imageSrc = "data:$mime;base64,$imageData";
+                            ?>
+                            <img src="<?php echo $imageSrc; ?>" alt="<?php echo ($row['type'] == 1) ? 'Lost' : 'Found'; ?> Item" class="listing-image">
+                            <div class="listing-info">
+                                <h3><?php echo $row['title']; ?></h3>
+                                <!-- <p class="listing-location">📍 UBT Dukagjini Salla 130</p> -->
+                                <p class="listing-date"><?php echo $row['date']; ?></p>
+                                <p class="listing-description"><?php echo $row['description']; ?></p>
+                            </div>
+                            <a href="details.php?id=<?= $row['id'] ?>" class="read-more">Shiko Detajet</a>
+                        </div>
+                    <?php endwhile; ?>
+                <?php endif; ?>
             </div>
             <div class="view-all">
-                <a href="lost.php" class="btn btn-outline">View All Listings</a>
+                <a href="lost.php" class="btn btn-outline">SHIKO TE GJITHA</a>
             </div>
         </section>
 
@@ -176,7 +195,7 @@ include 'db.php';
 
         <!-- Contact -->
         <div class="footer-section footer-contact">
-          <h1>Contact</h1>
+          <h1>Kontakti</h1>
           <p><span>Tel:</span> +383 XX XXX XXX</p>
           <p><span>Email:</span> contact@ubt-uni.net</p>
         </div>

@@ -44,11 +44,9 @@ $result = $conn->query($sql);
                     <div class="date-section"></div>
                     <div class="item-content">
                       <?php
-                        // Get image info from blob
                         $imgInfo = getimagesizefromstring($row['image']);
                         $mime = $imgInfo['mime'];
                         
-                        // Convert blob to base64
                         $imageData = base64_encode($row['image']);
                         $imageSrc = "data:$mime;base64,$imageData";
                         ?>
