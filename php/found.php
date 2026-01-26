@@ -1,9 +1,11 @@
 <?php
 include "db.php";
 
-// Na duhet ti marrim te gjitha postet( description=1, do te thot postet
+// Na duhet ti marrim te gjitha postet( is_found=0, do te thot postet
 // ku jane gjetur sendet e humbura)
-$sql = "SELECT id, title, image, number, description, type, user_id FROM posts WHERE type = 1";
+$sql = "SELECT id, title, image, number, description, type, user_id 
+        FROM posts 
+        WHERE type = 0 AND is_found = 0"; // Postet ku is_found = 0, pasi qe postet e gjetura nuk ka nevoje t'i paraqesim.
 $result = $conn->query($sql);
 ?>
 

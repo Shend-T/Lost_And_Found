@@ -47,8 +47,8 @@ include 'db.php';
                 <h1>Lost Something? Found Something?</h1>
                 <p class="hero-subtitle">We help reunite lost items with their owners. Report lost or found items and browse listings to find what you're looking for.</p>
                 <div class="hero-buttons">
-                    <a href="lost.php" class="btn btn-primary">Report Lost Item</a>
-                    <a href="found.php" class="btn btn-secondary">Report Found Item</a>
+                    <a href="lost.php" class="btn btn-primary">Find Lost Item</a>
+                    <a href="user.php" class="btn btn-secondary">Report Lost/Found Item</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -109,7 +109,10 @@ include 'db.php';
             <h2>Recent Listings</h2>
             <div class="listings-grid">
                 <?php 
-                    $sql = "SELECT * FROM posts ORDER BY date DESC";
+                    $sql = "SELECT * FROM posts
+                            WHERE is_found = 0
+                            ORDER BY date DESC
+                            LIMIT 5"; // e limitojme qe te jene vetem 5 postet e fundit
                     $result = $conn->query($sql);
                 ?>
 
@@ -130,7 +133,7 @@ include 'db.php';
                             <img src="<?php echo $imageSrc; ?>" alt="<?php echo ($row['type'] == 1) ? 'Lost' : 'Found'; ?> Item" class="listing-image">
                             <div class="listing-info">
                                 <h3><?php echo $row['title']; ?></h3>
-                                <!-- <p class="listing-location">📍 UBT Dukagjini Salla 130</p> -->
+                                <p class="listing-location">📍 <?php echo $row['location']; ?></p>
                                 <p class="listing-date"><?php echo $row['date']; ?></p>
                                 <p class="listing-description"><?php echo $row['description']; ?></p>
                             </div>

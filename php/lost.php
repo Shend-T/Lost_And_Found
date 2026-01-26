@@ -1,6 +1,8 @@
 <?php 
 include "db.php";
-$sql = "SELECT id, title, image, number, description, type, user_id FROM posts WHERE type = 0";
+$sql = "SELECT id, title, image, number, description, type, user_id 
+        FROM posts 
+        WHERE type = 1 AND is_found = 0";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>

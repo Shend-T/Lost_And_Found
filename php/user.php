@@ -13,6 +13,7 @@ $user_id = (int) $_COOKIE["user_id"]; //Sepse ne cookie, user_id eshte string
 if (isset($_POST['submit'])) {
     $title     = $_POST["title"];
     $phone_num = $_POST["phone_number"];
+    $location = $_POST["location"];
     $desc      = $_POST["description"];
     $type      = ($_POST['item'] === "lost") ? 1 : 0;
 
@@ -24,14 +25,15 @@ if (isset($_POST['submit'])) {
     // Read the binary data from the temporary file
     $imageData = file_get_contents($tmpName);
 
-    $sql = "INSERT INTO posts (title, image, number, description, type, user_id, date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO posts (title, image, number, location, description, type, user_id, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     
     $stmt->bind_param(
-        "sbisiis", 
+        "sbissiis", 
         $title, 
         $imageData, 
         $phone_num, 
+        $location,
         $desc, 
         $type,
         $user_id,
@@ -67,44 +69,45 @@ if (isset($_POST['submit'])) {
     <div id="nav-placeholder"></div>
  
     <div class="container flex center">
-        <div class="paper glass flex">
+        <div class="paper glass flex center">
             <div class="form-header flex center-h">
                 <h1>Pershendetje <?php echo $name; ?> keni n'donje gje per te raportuar?</h1>
             </div>
             <hr>
-    <!-- <form action="" method="POST" enctype="multipart/form-data"> -->
-    <div class="form-container flex center">
-        <!-- <h1>Pershendetje <?php echo $name; ?> keni n'donje gje per te raportuar?</h1> -->
-        
-        <form class="form flex center-v" action="" method="POST" enctype="multipart/form-data">
-            <label for="title">Title: </label>
-            <input type="text" name="title" id="title" required>
 
-            <input type="file" name="image" id="img" accept="image/*" required>
+            <div class="form-container flex center">
+                <form class="form flex center-v" action="" method="POST" enctype="multipart/form-data">
+                    <label for="title">Title: </label>
+                    <input type="text" name="title" id="title" required>
 
-            <label for="phone_number">Numri kontaktit: </label>
-            <input type="number" name="phone_number" id="phone_number" required>
+                    <input type="file" name="image" id="img" accept="image/*" required>
 
-            <label for="description">Detaje tjera: </label>
-            <textarea name="description" rows="5" cols="50"></textarea>
+                    <label for="phone_number">Numri kontaktit: </label>
+                    <input type="number" name="phone_number" id="phone_number" required>
 
-            <div class="form-radio">
-                <div class="option">
-                    <input type="radio" id="lost" name="item" value="lost" required>
-                    <label for="lost">Found a lost item</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="found" name="item" value="found">
-                    <label for="found">Reporting a lost item</label>
-                </div>
+                    <label for="location">Vendi ku e keni gjetur: </label>
+                    <input type="text" name="location" id="location" required>
+
+                    <label for="description">Detaje tjera: </label>
+                    <textarea name="description" rows="5" cols="50"></textarea>
+
+                    <div class="form-radio">
+                        <div class="option">
+                            <input type="radio" id="lost" name="item" value="lost" required>
+                            <label for="lost">Find a lost item</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="found" name="item" value="found">
+                            <label for="found">Reporting a lost item</label>
+                        </div>
+                    </div>
+
+                    <input type="submit" name="submit" value="Report A Lost Item">
+                </form>
+                <a href="index.php">Kthehu</a>
             </div>
-
-            <input type="submit" name="submit" value="Report A Lost Item">
-            <!-- <button type="submit">Report a Lost Item</button> -->
-        </form>
-        <a href="index.php">Return</a>
-    </div>
-    </div>
+            <a href="user_posts.php?id=<?= $_COOKIE["user_id"] ?>" class="show_posts">Shiko postimet e tua</a>
+        </div>
     </div>
 
     <!-- Ensure image has max size of 256x256 pixels -->

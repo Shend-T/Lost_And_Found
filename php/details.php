@@ -73,7 +73,13 @@ $imageSrc = "data:$mime;base64,$imageData"; // tash e kemi src-ne e imazhit
               <div class="detail-info-label">Data e postimit</div>
               <div class="detail-info-value" id="detailDate"><?php echo $post['date'] ?></div>
             </div>
+          </div>
 
+          <div class="detail-contact">
+            <div class="detail-contact-label" id="contactLabel">Lokacioni</div>
+            <div class="detail-contact-info" id="detailContact">
+               <?php echo $post['location'] ?>
+            </div>
           </div>
 
           <div class="detail-contact">

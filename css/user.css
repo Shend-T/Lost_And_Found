@@ -5,6 +5,14 @@
   /* background-color: var(--color-secondary); */
 }
 
+.show_posts {
+  padding: 5px 30px;
+  margin-bottom: 10px;
+
+  border-radius: 10px;
+  background-color: var(--color-primary);
+}
+
 .paper {
   margin-top: 5vh;
   flex-direction: column;
