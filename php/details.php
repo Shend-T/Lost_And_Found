@@ -1,4 +1,5 @@
 <?php 
+// Importojme databazen
 include "db.php";
 
 // Marrim id, nga url. Nese ska ateher vleren e merr 0( shiko if-in posht)
@@ -13,11 +14,16 @@ if ($post_id <= 0) {
 }
 
 // Tash qe u sigurum qe id-ja esht valide, e marrim postin nga db
-$sql = "SELECT * FROM posts WHERE id = " . intval($post_id); // intval sepse post_id llogaritet te jet string
+$sql = "SELECT * FROM posts 
+        WHERE id = " . intval($post_id); // intval sepse post_id llogaritet te jet string
 $result = $conn->query($sql);
 
 if (!$result || $result->num_rows === 0) {
   die("Post not found"); // 'Sanity' 'check'-i fundit, nese rastsisht user-i ka shkru url vet, per ni post qe nuk ekziston
+
+  // Ose mund te bejme
+  // echo "<script>alert('Nuk ekziston posti')</script>";
+  // header("Location: index.php");
 }
 $post = $result->fetch_assoc();
 

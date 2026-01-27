@@ -98,45 +98,16 @@ $result = $conn->query($sql);
             <?php else: ?>
               <h1>Nuk ka poste momentalisht.</h1>
             <?php endif; ?>
-
-            <!-- Kodi i komentuar ishte si baze -->
-          <!-- <article class="item-card">
-            <div class="date-section"></div>
-            <div class="item-content">
-              <img
-                src="https://images.unsplash.com/photo-1582139329536-e7284fece509?w=400&h=300&fit=crop"
-                alt="Lost Keys"
-                class="item-image"
-              />
-              <div class="item-details">
-                <div>
-                  <p class="item-title">Lorem Ipsum Dolor Sit Amet</p>
-                  <p class="item-description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris.
-                  </p>
-                </div>
-                <div class="item-contact">
-                  <div class="contact-label">Contact</div>
-                  <div class="contact-info">
-                    user@student.ubt.edu • +383 XX XXX XXX
-                  </div>
-                  <a href="details.php" class="read-more">View Details</a>
-                </div>
-              </div>
-            </div>
-          </article> -->
         </div>
       </div>
 
       <!-- Pagination -->
-      <?php if ($total_pages > 1): ?>
+      <?php if ($total_pages > 1): ?> <!-- Nese ka me shume faqe se 1 per te shfaqur -->
         <div style="display: flex; justify-content: center;">
             <div class="pagination">
                 <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                     <?php if ($i == $page): ?>
+                        <!-- Shtojme ?page= ne url -->
                         <a href="?page=<?php echo $i; ?>" class="active"><?php echo $i; ?></a>
                     <?php else: ?>
                         <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>

@@ -8,7 +8,6 @@ if (!(isset($_COOKIE["user_username"]) and isset($_COOKIE["user_id"]))) {
 
 $name = $_COOKIE["user_username"];
 $user_id = (int) $_COOKIE["user_id"]; //Sepse ne cookie, user_id eshte string
-// $name = "USER";
 
 if (isset($_POST['submit'])) {
     $title     = $_POST["title"];
@@ -112,25 +111,26 @@ if (isset($_POST['submit'])) {
 
     <!-- Ensure image has max size of 256x256 pixels -->
     <script>   
-    document.getElementById("img").addEventListener("change", function () {
-        const file = this.files[0];
-        if (!file) return;
+        // Kod i inspiruar nga: https://stackoverflow.com/questions/8903854/check-image-width-and-height-before-upload-with-javascript
+        document.getElementById("img").addEventListener("change", function () {
+            const file = this.files[0];
+            if (!file) return;
 
-        const img = new Image();
-        img.onload = function () {
-            if (img.width > 256 || img.height > 256) {
-                alert("Image must be max 256x256 pixels.");
-                document.getElementById("imge").value = ""; // clear input
-            }
-        };
+            const img = new Image();
+            img.onload = function () {
+                if (img.width > 256 || img.height > 256) {
+                    alert("Imazhi mund te jete maksimum 256x256 piksella.");
+                    document.getElementById("imge").value = ""; // clear input
+                }
+            };
 
-        const reader = new FileReader();
-        reader.onload = e => img.src = e.target.result;
-        reader.readAsDataURL(file);
-    });
+            const reader = new FileReader();
+            reader.onload = e => img.src = e.target.result;
+            reader.readAsDataURL(file);
+        });
     </script>
 
-    <!-- Ensure number input is only numbers -->
+    <!-- Sigurohemi qe ne input-in e numrit, te jene vetem numra te shkruar -->
     <script>
     const numberInput = document.getElementById('phone_number');
 

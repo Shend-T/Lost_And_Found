@@ -1,6 +1,7 @@
 <?php 
 include "db.php";
 
+// Kodi i komentuar ne found.php( pasi qe backend-i eshte thuajse i njejte)
 $results_per_page = 2;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $results_per_page;

@@ -1,9 +1,9 @@
 <?php
-// Lidhu per databaze( db shkurt)
 // $conn = new mysqli(
 //     "localhost", "root", "", "testdb"
 //     );
 
+// Lidhu per databaze( db shkurt)
 $conn = new mysqli(
     "localhost",
     "root",

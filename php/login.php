@@ -2,6 +2,7 @@
 include "db.php";
 
 if (isset($_COOKIE["user_username"]) and isset($_COOKIE["user_id"])) {
+    // Nese user-i esht i log-uar
     header("Location: index.php");
     exit();
 }
@@ -9,9 +10,10 @@ if (isset($_COOKIE["user_username"]) and isset($_COOKIE["user_id"])) {
 if (isset($_POST['submit'])) {
     $id = $_POST['id'];
     $password = $_POST['password'];
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash - ojme passwordin, pasi qe password-i eshte i hashuar ne db
+    // Per me shume, ktu jemi referencuar - https://www.php.net/manual/en/function.password-hash.php
 
-    $sql = "SELECT * FROM users WHERE ID = ?";
+    $sql = "SELECT * FROM users WHERE ID = ?"; // Lypim user-in me ID e shkruar
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -19,8 +21,11 @@ if (isset($_POST['submit'])) {
 
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
-        $correct_password = password_verify($password, $user["Password"]);
+        $correct_password = password_verify($password, $user["Password"]); // Verifikojme passwordin( dyjat duhen te jene te hash-uar)
+        // Per me shume - https://www.php.net/manual/en/function.password-verify.php
+
         if ($correct_password) {
+            // Nese gjithqka eshte ne rregull, i ruajm si 'cookies' keto vlera.
             setcookie("user_username", $user['Username'], time() + 3600 * 24 * 10);
             setcookie("user_id", $user['ID'], time() + 3600 * 24 * 10);
             
@@ -32,7 +37,7 @@ if (isset($_POST['submit'])) {
         } else {
             $message = "Incorrect Password!";
         
-        echo "<script>alert('$message');</script>";
+            echo "<script>alert('$message');</script>";
         }
     } else {
         $message = "User with your ID doesn't exist!";

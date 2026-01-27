@@ -1,6 +1,7 @@
 <?php 
 include "db.php";
 
+// Duhet siguruar qe user-i eshte i log-uar
 if (!(isset($_COOKIE["user_username"]) and isset($_COOKIE["user_id"]))) {
     header("Location: login.php");
     exit();
@@ -8,10 +9,12 @@ if (!(isset($_COOKIE["user_username"]) and isset($_COOKIE["user_id"]))) {
 
 $user_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($user_id != $_COOKIE["user_id"]) {
+  // Sigurojme qe id-ja ne url dhe id-ja e user-it jane te njejta, perndryshe nje user mund t'i sheh postet e nje user-i tjeter
   header("Location: index.php");
 }
 
-$sql = "SELECT * FROM posts WHERE user_id = " . intval($user_id);
+$sql = "SELECT * FROM posts
+        WHERE user_id = " . intval($user_id);
 $result = $conn->query($sql);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_posts'])) {
