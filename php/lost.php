@@ -1,8 +1,24 @@
 <?php 
 include "db.php";
+
+$results_per_page = 2;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $results_per_page;
+
+$total_sql = "SELECT COUNT(*) as total
+              FROM posts 
+              WHERE type = 1 AND is_found = 0";
+
+$total_result = $conn->query($total_sql);
+$total_row = $total_result->fetch_assoc();
+$total_posts = $total_row['total'];
+$total_pages = ceil($total_posts / $results_per_page);
+
 $sql = "SELECT id, title, image, number, description, type, user_id 
         FROM posts 
-        WHERE type = 1 AND is_found = 0";
+        WHERE type = 1 AND is_found = 0
+        ORDER BY id DESC 
+        LIMIT $results_per_page OFFSET $offset";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
@@ -78,14 +94,20 @@ $result = $conn->query($sql);
       </div>
 
       <!-- Pagination -->
-      <div style="display: flex; justify-content: center;">
-        <div class="pagination">
-          <a href="lost.html?page=1" class="active">1</a>
-          <!-- <a href="lost.html?page=2">2</a> -->
-          <!-- <a href="lost.html?page=3">3</a> -->
-          <!-- <a href="lost.html?page=4">4</a> -->
+      <?php if ($total_pages > 1): ?>
+        <div style="display: flex; justify-content: center;">
+            <div class="pagination">
+                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                    <?php if ($i == $page): ?>
+                        <a href="?page=<?php echo $i; ?>" class="active"><?php echo $i; ?></a>
+                    <?php else: ?>
+                        <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    <?php endif; ?>
+                <?php endfor; ?>
+            </div>
         </div>
-      </div>
+      <?php endif; ?>
+    </div>
     </div>
     
     <!-- Navbar Enhancement Script -->

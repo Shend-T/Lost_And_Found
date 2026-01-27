@@ -1,11 +1,33 @@
 <?php
 include "db.php";
 
+// Shfaqim vetem 2( e kisha bo 5, por me shum me interesojke logjika e kodit / pra 2 vetem ne 
+// 'production') poste, pasi qe kjo ben website-in me 'user-friendly'
+$results_per_page = 2; // Sa poste duam ti paraqesim
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Ne url do te shtohet se tek cili 'page' jemi
+$offset = ($page - 1) * $results_per_page;
+
+// Marrim numrin total te posteve
+$total_sql = "SELECT COUNT(*) as total
+              FROM posts 
+              WHERE type = 0 AND is_found = 0";
+
+$total_result = $conn->query($total_sql);
+$total_row = $total_result->fetch_assoc();
+$total_posts = $total_row['total'];
+$total_pages = ceil($total_posts / $results_per_page);
+
+// echo "<script>alert('Total posts: $total_posts | Total pages: $total_pages')</script>";
+
 // Na duhet ti marrim te gjitha postet( is_found=0, do te thot postet
 // ku jane gjetur sendet e humbura)
 $sql = "SELECT id, title, image, number, description, type, user_id 
         FROM posts 
-        WHERE type = 0 AND is_found = 0"; // Postet ku is_found = 0, pasi qe postet e gjetura nuk ka nevoje t'i paraqesim.
+        WHERE type = 0 AND is_found = 0
+        ORDER BY id DESC 
+        LIMIT $results_per_page OFFSET $offset"; // Postet ku is_found = 0, pasi qe postet e gjetura nuk ka nevoje t'i paraqesim
+                                                 // Bejm offset per cdo page * results_per_page
+        
 $result = $conn->query($sql);
 ?>
 
@@ -110,14 +132,19 @@ $result = $conn->query($sql);
       </div>
 
       <!-- Pagination -->
-      <div style="display: flex; justify-content: center;">
-        <div class="pagination">
-          <a href="lost.html?page=1" class="active">1</a>
-          <!-- <a href="lost.html?page=2">2</a> -->
-          <!-- <a href="lost.html?page=3">3</a> -->
-          <!-- <a href="lost.html?page=4">4</a> -->
+      <?php if ($total_pages > 1): ?>
+        <div style="display: flex; justify-content: center;">
+            <div class="pagination">
+                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                    <?php if ($i == $page): ?>
+                        <a href="?page=<?php echo $i; ?>" class="active"><?php echo $i; ?></a>
+                    <?php else: ?>
+                        <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    <?php endif; ?>
+                <?php endfor; ?>
+            </div>
         </div>
-      </div>
+      <?php endif; ?>
     </div>
     
     <!-- Navbar Enhancement Script -->
