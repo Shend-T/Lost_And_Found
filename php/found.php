@@ -56,8 +56,8 @@ $result = $conn->query($sql);
     <div class="container">
       <!-- Header -->
       <div class="page-header">
-        <h1>Found Items</h1>
-        <p>Items found on campus waiting to be claimed</p>
+        <h1>Sendet E Gjetura</h1>
+        <p>Artikuj të gjetur në kampus që presin të merren.</p>
       </div>
 
       <div class="content-wrapper">

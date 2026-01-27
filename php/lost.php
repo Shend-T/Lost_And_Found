@@ -46,8 +46,8 @@ $result = $conn->query($sql);
 
     <div class="container">
       <div class="page-header">
-        <h1>Lost Items</h1>
-        <p>Help us reunite people with their lost belongings</p>
+        <h1>Sendet E Humbura</h1>
+        <p>Na ndihmoni të ribashkojmë njerëzit me sendet e tyre të humbura.</p>
       </div>
 
       <div class="content-wrapper">

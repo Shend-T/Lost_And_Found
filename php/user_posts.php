@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_posts'])) {
         <h1>Postet e juaja</h1>
       </div>
 
-      <div class="content-wrapper container center">
+      <div class="content-wrapper container">
         <div class="main-content">
           <form action="" method="POST" style="width: max-content">
           <?php if ($result->num_rows > 0): ?>
@@ -119,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_posts'])) {
 
             margin-top: 20px;
             margin-left: 20vw;
+            margin-bottom: 10vh;
             padding: 10px;
           ">
         </form>
