@@ -44,11 +44,11 @@ include 'db.php';
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <h1>Lost Something? Found Something?</h1>
-                <p class="hero-subtitle">We help reunite lost items with their owners. Report lost or found items and browse listings to find what you're looking for.</p>
+                <h1>Ke humbur diçka? Ke gjetur diçka?</h1>
+                <p class="hero-subtitle">Ne ndihmojmë në ribashkimin e sendeve të humbura me pronarët e tyre. Raportoni sende të humbura ose të gjetura dhe shfletoni listat për të gjetur atë që po kërkoni.</p>
                 <div class="hero-buttons">
-                    <a href="lost.php" class="btn btn-primary">Find Lost Item</a>
-                    <a href="user.php" class="btn btn-secondary">Report Lost/Found Item</a>
+                    <a href="lost.php" class="btn btn-primary">Gjej Diqka Të Humbur</a>
+                    <a href="user.php" class="btn btn-secondary">Raporto Diqka Të Humbur/Gjetur.</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -59,54 +59,53 @@ include 'db.php';
         <!-- Stats Section -->
         <section class="stats">
             <div class="stat-card">
-                <div class="stat-number">1,245</div>
-                <div class="stat-label">Items Found</div>
+                <div class="stat-number">1,245</div> <!-- Keto numra jane vetem per estetike -->
+                <div class="stat-label">Gjera Te Raportuara</div> <!-- Per bese nuk po di menyre me te mire me e then shqip -->
             </div>
             <div class="stat-card">
                 <div class="stat-number">856</div>
-                <div class="stat-label">Items Reunited</div>
+                <div class="stat-label">Gjëra të gjetura</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">389</div>
-                <div class="stat-label">Active Listings</div>
+                <div class="stat-label">Poste Aktive</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">2,150+</div>
-                <div class="stat-label">Registered Users</div>
+                <div class="stat-label">Përdurues</div>
             </div>
         </section>
 
         <!-- How It Works Section -->
         <section class="how-it-works">
-            <h2>How It Works</h2>
+            <h2>Si Punon</h2>
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <h3>Report</h3>
-                    <p>Report a lost or found item with details and photos. The more information you provide, the easier it is to match items.</p>
+                    <h3>Raporto</h3>
+                    <p>Raportoni një send të humbur ose të gjetur me detaje dhe foto. Sa më shumë informacion të jepni, aq më e lehtë është të përputhen sendet.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>Browse</h3>
-                    <p>Search through listings or browse by category. Filter by location, date, or item type to find what you're looking for.</p>
+                    <h3>Shfleto</h3>
+                    <p>Kërkoni nëpër lista ose shfletoni sipas kategorisë. Filtroni sipas vendndodhjes, datës ose llojit të artikullit për të gjetur atë që po kërkoni.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
-                    <h3>Connect</h3>
-                    <p>Contact the owner or finder through our secure messaging system. Verify ownership and arrange a safe meeting place.</p>
+                    <h3>Kontakto</h3>
+                    <p>Kontaktoni pronarin ose gjetësin përmes sistemit tonë të mesazheve të sigurta. Verifikoni pronësinë dhe caktoni një vend të sigurt takimi.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">4</div>
-                    <h3>Reunite</h3>
-                    <p>Successfully reunite items with their owners! Mark items as returned and share your success story with our community.</p>
+                    <h3>Ribashkohu</h3> <!-- Nuk po di term më adekuat -->
+                    <p>Ribashkoni me sukses artikujt me pronarët e tyre! Shënoni artikujt si të kthyer dhe ndani historinë tuaj të suksesit me komunitetin tonë.</p>
                 </div>
             </div>
         </section>
 
         <!-- Recent Listings Section -->
-        <!-- === HEREEEEEE ==== -->
         <section class="recent-listings">
-            <h2>Recent Listings</h2>
+            <h2>Postet Më Të Fundit</h2>
             <div class="listings-grid">
                 <?php 
                     $sql = "SELECT * FROM posts
@@ -149,37 +148,27 @@ include 'db.php';
 
         <!-- Features Section -->
         <section class="features">
-            <h2>Why Choose Us?</h2>
+            <h2>Pse Na Zgjidhni Ne?</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🔍</div>
-                    <h3>Easy Search</h3>
-                    <p>Powerful search filters help you find items quickly by location, category, and date.</p>
+                    <h3>Kërkim i Lehtë</h3>
+                    <p>Filtrat e lehtë të kërkimit ju ndihmojnë të gjeni artikuj shpejt sipas vendndodhjes, kategorisë dhe datës.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📸</div>
-                    <h3>Photo Verification</h3>
-                    <p>Upload photos of items for better identification and verification of ownership.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Secure Messaging</h3>
-                    <p>Safe and private communication between users to verify details and arrange pickup.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Quick Notifications</h3>
-                    <p>Get instant alerts when new matching items are posted or when someone contacts you.</p>
+                    <h3>Verifikimi Me Foto</h3>
+                    <p>Ngarko foto të artikujve për identifikim më të mirë dhe verifikim të pronësisë.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🌍</div>
-                    <h3>Local Focus</h3>
-                    <p>Connect with people in your area. Perfect for campus and community lost & found.</p>
+                    <h3>Fokusi Lokal</h3>
+                    <p>Lidhu me njerëz në zonën tënde. Perfekt për objektet e humbura dhe të gjetura në kampus dhe komunitet.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">✅</div>
-                    <h3>Verified Users</h3>
-                    <p>Trusted community with verified accounts to ensure safe and legitimate transactions.</p>
+                    <h3>Përdorues Të Verifikuar</h3>
+                    <p>Komunitet i besuar me llogari të verifikuara për të siguruar transaksione të sigurta dhe legjitime.</p>
                 </div>
             </div>
         </section>
@@ -192,7 +181,7 @@ include 'db.php';
         <div class="footer-section footer-center">
           <p class="footer-copyright">
             © Copyright 2025 UBT Lost and Found<br />
-            All Rights Reserved
+            Të gjitha të drejtat e rezervuara
           </p>
         </div>
 

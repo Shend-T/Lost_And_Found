@@ -114,7 +114,9 @@
   border-radius: 16px;
   text-align: center;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .stat-card:hover {
@@ -221,8 +223,11 @@
   overflow: hidden;
   width: 100%;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   position: relative;
+  padding-bottom: 15px;
 }
 
 .listing-card:hover {
@@ -261,6 +266,7 @@
 
 .listing-info {
   padding: 20px;
+  padding-bottom: 10px;
 }
 
 .listing-info h3 {
@@ -315,6 +321,25 @@
   content: "→";
 }
 
+.read-more {
+  font-size: 14px;
+
+  margin: 20px;
+  padding: 10px;
+
+  color: #244082;
+  background-color: transparent;
+
+  border: 2px solid #244082;
+  border-radius: 20px;
+
+  transition: all 0.2s ease-in;
+}
+.read-more:hover {
+  color: var(--secondary-text-color);
+  background-color: #244082;
+}
+
 .view-all {
   text-align: center;
   margin-top: 40px;
@@ -347,7 +372,9 @@
   border-radius: 16px;
   text-align: center;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .feature-card:hover {
