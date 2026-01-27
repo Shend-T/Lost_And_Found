@@ -25,7 +25,27 @@ Projekti është ndërtuar duke përdorur vetëm teknologjitë bazike të zhvill
 
 ## 🔎 Pershkrim i Kodit
 
-Ne cdo `folder` gjendet njw `README.md`, ku shpjegohet struktura e `file-ave` mw detajisht.
+Ne cdo `folder`-in `php` gjendet një `README.md`, ku shpjegohet struktura e `file-ave` më detajisht.
+
+---
+
+## Pamja e Website-it
+
+##### Landing Page
+
+![Landing  Page](./images/1.png)
+
+##### Lost Page
+
+![Lost Page](./images/2.png)
+
+##### User Page
+
+![User Page](./images/3.png)
+
+##### User Posts Page
+
+![User Posts](./images/4.png)
 
 ---
 
