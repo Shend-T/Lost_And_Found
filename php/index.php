@@ -6,12 +6,12 @@ include 'db.php';
 //     exit();
 // }
 
-// if (isset($_POST["sign_out"])) {
-//   setcookie("user_username", "", time() - 3600); 
-//   setcookie("user_id", "", time() - 3600); 
-//   header("Refresh: 0");
-//   exit();
-// }
+if (isset($_POST["sign_out"])) {
+  setcookie("user_username", "", time() - 3600); 
+  setcookie("user_id", "", time() - 3600); 
+  header("Refresh: 0");
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +41,10 @@ include 'db.php';
     <div id="nav-placeholder"></div>
 
     <div class="container">
+        <form action="" method="POST">
+            <button type="submit" name="sign_out">Sign Out</button>
+        </form>    
+
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
@@ -193,12 +197,6 @@ include 'db.php';
         </div>
       </div>
     </footer>
-
-  <!-- <form action="" method="POST">
-    <button type="submit" name="sign_out">Sign Out</button>
-  </form>
-
-    <a href="user.php" class="button">User</a> -->
 
     <script>
       $(function(){
