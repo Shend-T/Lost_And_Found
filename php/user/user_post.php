@@ -268,5 +268,38 @@ if (isset($_POST['delete_post'])) {
         }
     });
     </script>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const isDelete = event.submitter && event.submitter.name === 'delete_post';
+            if (isDelete) return;
+
+            const title = document.getElementById('title').value.trim();
+            if (title.length < 1 || title.length > 255) {
+                alert('Titulli duhet te jete midis 1 dhe 255 karakteresh');
+                event.preventDefault();
+                return;
+            }
+
+            const phone = document.getElementById('phone_number').value;
+            if (phone.length < 8 || phone.length > 11) {
+                alert('Numri i telefonit duhet te jete midis 8 dhe 11 shifrave');
+                event.preventDefault();
+                return;
+            }
+            const location = document.getElementById('location').value.trim();
+            if (location.length < 1 || location.length > 100) {
+                alert('Vendi duhet te jete midis 1 dhe 100 karakteresh');
+                event.preventDefault();
+                return;
+            }
+            const description = document.querySelector('textarea[name="description"]').value.trim();
+            if (description.length > 500) {
+                alert('Pershkrimi nuk mund te jete me i gjate se 500 karaktere');
+                event.preventDefault();
+                return;
+            }
+        })
+    </script>
 </body>
 </html>

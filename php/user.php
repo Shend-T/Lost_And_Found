@@ -10,17 +10,46 @@ $name = $_COOKIE["user_username"];
 $user_id = (int) $_COOKIE["user_id"]; //Sepse ne cookie, user_id eshte string
 
 if (isset($_POST['submit'])) {
-    $title     = $_POST["title"];
-    $phone_num = $_POST["phone_number"];
-    $location = $_POST["location"];
-    $desc      = $_POST["description"];
+    $title = trim($_POST["title"] ?? '');
+    if (strlen($title) < 1 || strlen($title) > 255) {
+        echo "<script>alert('Titulli duhet te jete midis 1 dhe 255 karakteresh')</script>";
+        exit();
+    }
+    $phone_num = trim($_POST["phone_number"] ?? '');
+    if (!preg_match('/^[0-9]{8,11}$/', $phone_num)) {
+        echo "<script>alert('Numri i telefonit duhet te jete midis 8 dhe 11 shifrave')</script>";
+        exit();
+    }
+    $location = trim($_POST["location"] ?? '');
+    if (strlen($location) < 1 || strlen($location) > 100) {
+        echo "<script>alert('Vendi duhet te jete midis 1 dhe 100 karakteresh')</script>";
+        exit();
+    }
+    $desc = trim($_POST["description"] ?? '');
+    if (strlen($desc) > 500) {
+        echo "<script>alert('Pershkrimi nuk mund te jete me i gjate se 500 karaktere')</script>";
+        exit();
+    }
+    // $title     = $_POST["title"];
+    // $phone_num = $_POST["phone_number"];
+    // $location = $_POST["location"];
+    // $desc      = $_POST["description"];
     $type      = ($_POST['item'] === "lost") ? 1 : 0;
 
+    if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+        echo "<script>alert('Ju lutem ngarkoni nje foto')</script>";
+        exit();
+    }
     $tmpName = $_FILES['image']['tmp_name'];
     $fileName = $_FILES['image']['name'];
     $fileType = $_FILES['image']['type'];
     $date = date('Y-m-d');
 
+    $imageInfo = getimagesize($tmpName);
+    if ($imageInfo[0] > 256 || $imageInfo[1] > 256) {
+        echo "<script>alert('Imazhi mund te jete maksimum 256x256 piksella.')</script>";
+        exit();
+    }
     // Lexo 'data'-n binare nga file-i
     $imageData = file_get_contents($tmpName);
 
@@ -39,9 +68,14 @@ if (isset($_POST['submit'])) {
         $user_id,
         $date);
     $stmt->send_long_data(1, $imageData);
-    // $stmt->send_long_data(1, $imageBlob);
 
-    $stmt->execute();
+    if ($stmt->execute()) {
+        echo "<script>alert('Postimi u krijua me sukses!')</script>";
+        header('Location: user_posts.php');
+    } else {
+        echo "<script>alert('Gabim gjate krijimit te postimit: " . $conn->error . "')</script>";
+    }
+    $stmt->close();
 }
 ?>
 
@@ -113,6 +147,39 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const title = document.getElementById('title').value.trim();
+            if (title.length < 1 || title.length > 255) {
+                alert('Titulli duhet te jete midis 1 dhe 255 karakteresh');
+                event.preventDefault();
+                return;
+            }
+
+            const phone = document.getElementById('phone_number').value;
+            if (phone.length < 8 || phone.length > 11) {
+                alert('Numri i telefonit duhet te jete midis 8 dhe 11 shifrave');
+                event.preventDefault();
+                return;
+            }
+
+            const location = document.getElementById('location').value.trim();
+            if (location.length < 1 || location.length > 100) {
+                alert('Vendi duhet te jete midis 1 dhe 100 karakteresh');
+                event.preventDefault();
+                return;
+            }
+
+            const description = document.querySelector('textarea[name="description"]').value.trim();
+            if (description.length > 500) {
+                alert('Pershkrimi nuk mund te jete me i gjate se 500 karaktere');
+                event.preventDefault();
+                return;
+            }
+
+        });
+    </script>
+
     <!-- Ensure image has max size of 256x256 pixels -->
     <script>   
         // Kod i inspiruar nga: https://stackoverflow.com/questions/8903854/check-image-width-and-height-before-upload-with-javascript
@@ -141,6 +208,21 @@ if (isset($_POST['submit'])) {
     numberInput.addEventListener('keypress', function(event) {
         if (event.key < '0' || event.key > '9') {
         event.preventDefault();
+        }
+    });
+    </script>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+        const radios = document.querySelectorAll('input[name="item"]');
+        let isChecked = false;
+        radios.forEach(radio => {
+            if (radio.checked) isChecked = true;
+        });
+        
+        if (!isChecked) {
+            alert('Ju lutem zgjidhni nje opsion (Kerkoj ose Raportoj)');
+            event.preventDefault();
         }
     });
     </script>
