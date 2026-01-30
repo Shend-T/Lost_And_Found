@@ -1,9 +1,9 @@
 <?php 
-$user_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if ($user_id != $_COOKIE["user_id"]) {
-  // Sigurojme qe id-ja ne url dhe id-ja e user-it jane te njejta, perndryshe nje user mund t'i sheh postet e nje user-i tjeter
-  header("Location: index.php");
+if (!(isset($_COOKIE["user_username"]) and isset($_COOKIE["user_id"]))) {
+    header("Location: login.php");
+    exit();
 }
+$user_id = $_COOKIE["user_id"];
 
 $sql = "SELECT * FROM posts
         WHERE user_id = " . intval($user_id);
@@ -54,7 +54,8 @@ $result = $conn->query($sql);
 
     <div class="container">
         <div class="page-header">
-            <h1>Postet e Juaja</h1>
+            <h1 style="margin-bottom: 10px;">Postet e Juaja</h1>
+            <a class='edit-button'  href="user.php">Krijo Post Te Rij</a>
         </div>
 
         <div class="content-wrapper container">

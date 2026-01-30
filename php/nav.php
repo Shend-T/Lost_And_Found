@@ -13,7 +13,7 @@
     <a href="lost.php" class="nav-icon" id="lost" title="Shiko sendet e humbura">
         <img src="../media/lost.png" alt="lost" />
     </a>
-    <a href="user.php" class="nav-icon" id="user" title="Krijo postim">
+    <a href="user_posts.php" class="nav-icon" id="user" title="Krijo postim">
         <img src="../media/user.png" alt="user" />
     </a>
     </div>

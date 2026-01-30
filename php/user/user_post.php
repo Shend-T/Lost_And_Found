@@ -1,9 +1,9 @@
 <?php 
-$user_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if ($user_id != $_COOKIE["user_id"]) {
-  // Sigurojme qe id-ja ne url dhe id-ja e user-it jane te njejta, perndryshe nje user mund t'i sheh postet e nje user-i tjeter
-  header("Location: index.php");
+if (!(isset($_COOKIE["user_username"]) and isset($_COOKIE["user_id"]))) {
+    header("Location: login.php");
+    exit();
 }
+$user_id = $_COOKIE["user_id"];
 
 $post_id = isset($_GET['post_id']) ? intval($_GET['post_id']) : 0;
 if ($post_id <= 0) {
@@ -28,12 +28,13 @@ $mime = $imgInfo['mime'];
 $imageData = base64_encode($post['image']);
 $imageSrc = "data:$mime;base64,$imageData"; 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_post'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $location = $_POST['location'];
     $phone_number = $_POST['phone_number'];
-    $is_found = $_POST['is_found'];
+    // $is_found = $_POST['is_found'];
+    $is_found = isset($_POST['is_found']) ? 1 : 0;
     $new_date = date('Y-m-d');
 
     $update_sql = "UPDATE posts SET 
@@ -80,6 +81,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: user.php");
     exit;
 }
+
+if (isset($_POST['delete_post'])) {
+    $delete_sql = "DELETE FROM posts WHERE id = ? AND user_id = ?";
+    $stmt = $conn->prepare($delete_sql);
+    $stmt->bind_param("ii", $post_id, $user_id);
+    
+    if ($stmt->execute()) {
+        header("Location: user.php");
+        exit;
+    } else {
+        echo "<script>alert('Gabim gjate fshirjes')</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -94,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- === CSS Links === -->
     <link rel="stylesheet" href="../css/index.css" />
-    <link rel="stylesheet" href="../css/details.css" />
+    <link rel="stylesheet" href="../css/user.css" />
 
     <link
       href="https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin"
@@ -102,64 +116,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     />
 
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <style>
+        .container {
+            margin: clamp(5vh, 15vh, 20vh) 0;
+        }
+    </style>
 </head>
 <body>
     <div id="nav-placeholder"></div>
 
-    <div class="container" style="margin-top: 10vh;">
-        <a href="user.php" class="back-button" id="backButton">Kthehu</a>
-        <h1>Edito Postin</h1>
+    <div class="container flex center">
+        <div class="paper glass flex center paper-post">
 
-        <div class="detail-card">
-            <form 
-                class="form center" 
-                action="" 
-                method="POST" 
-                enctype="multipart/form-data"
-                <!-- style="width: 100%;" -->
-                >
-            <div class="detail-image-container">
-                <img 
-                    src="<?php echo $imageSrc; ?>"
-                    alt="<?php echo $post['title']; ?>"
-                    class="detail-image"
-                    id="detailImage"
-                    style="width: 100px !important; height: auto; margin-bottom: 20px;"
-                     />
-                    <label style="padding-top: 20px;" class="detail-contact-label" id="contactLabel" for="image">Ndrysho foton:</label>
-                    <div>
-                        <input 
-                            type="file" 
-                            name="image" 
-                            id="image" 
-                            accept="image/*"
-                            onchange="previewImage(event)">
-                    </div>
+            <div class="form-header flex center-h">
+                <h1>Ndrysho Postin</h1>
             </div>
-            <div class="detail-content">
-                <div class="detail-contact">
-                    <label class="detail-contact-label" id="contactLabel" for="title">Titulli: </label>
-                    <div>
-                        <input 
-                            type="text" 
-                            name="title" 
-                            id="title" 
-                            required 
-                            value="<?php echo $post['title'] ?>">
-                    </div>
-                </div>
+            <hr>
+            
+            <div class="form-container flex center" style="height: max-content;">
+                <form 
+                    class="form flex center-v" 
+                    action="" 
+                    method="POST" 
+                    enctype="multipart/form-data"
+                    
+                    >
+                    <img 
+                        src="<?php echo $imageSrc; ?>"
+                        alt="<?php echo $post['title']; ?>"
+                        class="detail-image"
+                        id="detailImage"
+                        style="width: 100px !important; height: auto; margin-bottom: 20px;"
+                        />
+                    <label class="detail-contact-label" id="contactLabel" style="margin-right: 10px;" for="image">Ndrysho foton:</label>
+                    <input 
+                        type="file" 
+                        name="image" 
+                        id="image" 
+                        accept="image/*"
+                        onchange="previewImage(event)">
 
-                <div class="detail-contact">
-                    <label class="detail-contact-label" id="contactLabel" for="description">Detaje tjera: </label>
-                    <div>
-                        <textarea name="description" rows="5" cols="50"><?php echo $post['description'] ?>
-                        </textarea>
-                    </div>
-                </div>
+                    <label for="title">Titulli: </label>
+                    <input 
+                        type="text" 
+                        name="title" 
+                        id="title" 
+                        required 
+                        value="<?php echo $post['title'] ?>">
 
-                <div class="detail-contact">
-                    <label class="detail-contact-label" id="contactLabel" for="location">Vendi ku e keni gjetur: </label>
-                    <div>
+                    <label for="description">Detaje tjera: </label>
+                    <textarea name="description" rows="5" cols="50"><?php echo $post['description'] ?></textarea>
+
+                    <label for="location">Vendi ku e keni gjetur: </label>
                     <input 
                         type="text" 
                         name="location" 
@@ -167,38 +176,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         required
                         value="<?php echo $post['location'] ?>"
                         >
-                    </div>
-                </div>
 
-                <div class="detail-contact">
-                    <label class="detail-contact-label" id="contactLabel" for="phone_number">Kontakti: </label>
-                    <div>
-                        <input 
-                            type="number" 
-                            name="phone_number" 
-                            id="phone_number" 
-                            required 
-                            value="<?php echo $post['number'] ?>"
-                            >
-                    </div>
-                </div>
-
-                <div class="detail-contact">
+                    <label for="phone_number">Numri kontaktit: </label>
                     <input 
-                        type="checkbox" 
-                        name="is_found" 
-                        value="<?php echo $post['is_found']; ?>"
-                        <?php echo $post['is_found'] ? 'checked' : ''; ?>
+                        type="number" 
+                        name="phone_number" 
+                        id="phone_number" 
+                        required 
+                        value="<?php echo $post['number'] ?>"
                         >
-                    <label style="font-size: 16px;">E gjetur</label>
-                </div>
 
-                <div>
-                    <button>Edito!</button>
-                </div>
-            </div>
+                    <div class="form-radio">
+                    <div class="option">
+                    <input 
+                            type="checkbox" 
+                            name="is_found" 
+                            id="is_found"
+                            value="1"
+                            <?php echo $post['is_found'] ? 'checked' : ''; ?>
+                            >    
+                    <label for="is_found">E gjetur</label>
+                        </div>
+                    </div>
+
+                    <input 
+                        type="submit" 
+                        name="update_post" 
+                        value="Edito!" 
+                        class="post_button update"
+                        style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;"
+                    >
+                    <input 
+                        type="submit" 
+                        name="delete_post" 
+                        onclick="return confirm('Je i sigurt qe deshiron te fshish kete post?');"
+                        class="post_button delete"
+                        style="padding: 10px 20px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;"
+                        value="Fshij!"
+                    >
             </form>
         </div>
+        <div class="flex center" style="width: 100%;">
+            <a href="user_posts.php" class="show_posts">Kthehu</a>
+        </div>
+    </div>
     </div>
 
     <script>
@@ -216,6 +237,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         };
         reader.readAsDataURL(event.target.files[0]);
       }
+    </script>
+
+    <script>   
+        // Kod i inspiruar nga: https://stackoverflow.com/questions/8903854/check-image-width-and-height-before-upload-with-javascript
+        document.getElementById("image").addEventListener("change", function () {
+            const file = this.files[0];
+            if (!file) return;
+
+            const img = new Image();
+            img.onload = function () {
+                if (img.width > 256 || img.height > 256) {
+                    alert("Imazhi mund te jete maksimum 256x256 piksella.");
+                    document.getElementById("image").value = ""; // clear input
+                }
+            };
+
+            const reader = new FileReader();
+            reader.onload = e => img.src = e.target.result;
+            reader.readAsDataURL(file);
+        });
+    </script>
+
+    <script>
+    const numberInput = document.getElementById('phone_number');
+
+    numberInput.addEventListener('keypress', function(event) {
+        if (event.key < '0' || event.key > '9') {
+        event.preventDefault();
+        }
+    });
     </script>
 </body>
 </html>

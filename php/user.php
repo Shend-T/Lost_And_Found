@@ -21,10 +21,11 @@ if (isset($_POST['submit'])) {
     $fileType = $_FILES['image']['type'];
     $date = date('Y-m-d');
 
-    // Read the binary data from the temporary file
+    // Lexo 'data'-n binare nga file-i
     $imageData = file_get_contents($tmpName);
 
-    $sql = "INSERT INTO posts (title, image, number, location, description, type, user_id, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO posts 
+           (title, image, number, location, description, type, user_id, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     
     $stmt->bind_param(
@@ -69,16 +70,18 @@ if (isset($_POST['submit'])) {
  
     <div class="container flex center">
         <div class="paper glass flex center">
+            <!-- <a href="user.php" class="back-button" id="backButton">Kthehu</a> -->
             <div class="form-header flex center-h">
-                <h1>Pershendetje <?php echo $name; ?> keni n'donje gje per te raportuar?</h1>
+                <h1>Pershendetje <?php echo $name; ?> keni ndonje gje per te raportuar?</h1>
             </div>
             <hr>
 
             <div class="form-container flex center">
                 <form class="form flex center-v" action="" method="POST" enctype="multipart/form-data">
-                    <label for="title">Title: </label>
+                    <label for="title">Titulli: </label>
                     <input type="text" name="title" id="title" required>
 
+                    <label for="img">Foto:</label>
                     <input type="file" name="image" id="img" accept="image/*" required>
 
                     <label for="phone_number">Numri kontaktit: </label>
@@ -93,19 +96,20 @@ if (isset($_POST['submit'])) {
                     <div class="form-radio">
                         <div class="option">
                             <input type="radio" id="lost" name="item" value="lost" required>
-                            <label for="lost">Find a lost item</label>
+                            <label for="lost">Kerkoj Diqka Te Humbur</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="found" name="item" value="found">
-                            <label for="found">Reporting a lost item</label>
+                            <label for="found">Raportoj Diqka Te Humbur</label>
                         </div>
                     </div>
 
-                    <input type="submit" name="submit" value="Report A Lost Item">
+                    <input type="submit" name="submit" value="Krijo Postin">
                 </form>
-                <a href="index.php">Kthehu</a>
             </div>
-            <a href="user_posts.php?id=<?= $_COOKIE["user_id"] ?>" class="show_posts">Shiko postimet e tua</a>
+            <div class="flex center" style="width: 100%;">
+                <a href="user_posts.php" class="show_posts">Kthehu te postimet e tua</a>
+            </div>
         </div>
     </div>
 
@@ -120,7 +124,7 @@ if (isset($_POST['submit'])) {
             img.onload = function () {
                 if (img.width > 256 || img.height > 256) {
                     alert("Imazhi mund te jete maksimum 256x256 piksella.");
-                    document.getElementById("imge").value = ""; // clear input
+                    document.getElementById("img").value = ""; // clear input
                 }
             };
 
