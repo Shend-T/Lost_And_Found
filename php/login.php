@@ -69,8 +69,8 @@ if (isset($_POST['submit'])) {
     <div class="container flex center">
         <div class="paper flex">
             <div class="form-header flex center-h">
-                <h1>Welcome back!</h1>
-                <p>Please enter you're login info...</p>
+                <h1>Pershendetje!</h1>
+                <p>Ju lutem kyquni ne website...</p>
             </div>
             <hr>
 
@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
                 </form>
 
                 <br />
-                <p>Don't Have An Account? <a href="signup.php">Sign Up</a></p>
+                <p>Nuk ke profil? <a href="signup.php">Sign Up</a></p>
             </div>
         </div>
     </div>

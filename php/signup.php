@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
-        $message = "User already exists";
+        $message = "User-i ekziston";
         echo "<script>alert('$message')</script>";
     }
 
@@ -59,8 +59,8 @@ if (isset($_POST['submit'])) {
     <div class="container flex center">
         <div class="paper glass flex">
             <div class="form-header flex center-h">
-                <h1>Welcome!</h1>
-                <p>Please create you're profile...</p>
+                <h1>Pershendetje!</h1>
+                <p>Ju lutem krijoni profilin tuaj...</p>
             </div>
             <hr>
 
@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
                 </form>
 
                 <br />
-                <p>Already Have An Account? <a href="login.php">Log In</a></p>
+                <p>Ke profil? <a href="login.php">Log In</a></p>
             </div>
         </div>
     </div>
