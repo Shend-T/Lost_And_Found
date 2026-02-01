@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash - ojme passwordin, pasi qe password-i eshte i hashuar ne db
     // Per me shume, ktu jemi referencuar - https://www.php.net/manual/en/function.password-hash.php
 
-    $sql = "SELECT * FROM users WHERE ID = ?"; // Lypim user-in me ID e shkruar
+    $sql = "SELECT * FROM users WHERE Student_ID = ?"; // Lypim user-in me ID e shkruar
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();

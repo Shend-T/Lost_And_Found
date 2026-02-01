@@ -7,7 +7,7 @@ if (isset($_POST['auth'])) {
         die("Invalid input");
     }
 
-    $sql  = "SELECT * FROM users WHERE ID = ?";
+    $sql  = "SELECT * FROM users WHERE Student_ID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('i', $id);
     $stmt->execute();

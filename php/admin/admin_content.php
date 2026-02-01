@@ -1,6 +1,6 @@
 <?php 
 if (!isset($_SESSION['admin_authenticated']) && $_SESSION['admin_authenticated'] !== true) {
-    header('Location: admin_content.php');
+    header('Location: ../admin.php');
     exit;
 }
 
@@ -14,19 +14,39 @@ if (isset($_POST["sign_out"])) {
 
 if (isset($_POST['delete_user'])) {
     $user_id = $_POST['user_id'];
-    
-    $stmt = $conn->prepare("DELETE FROM users WHERE ID = ?");
-    $stmt->bind_param("i", $user_id);
-    
-    if ($stmt->execute()) {
-        $_SESSION['message'] = "User-i u fshi me sukses";
-        // echo "<script>alert('User-i u fshi me sukses')</script>";
+
+    $conn->begin_transaction(); // https://www.php.net/manual/en/mysqli.begin-transaction.php
+    $success = true;
+
+    $delete_posts_stmt = $conn->prepare("DELETE FROM posts WHERE user_id = ?");
+    $delete_posts_stmt->bind_param("i", $user_id);
+
+    if (!$delete_posts_stmt->execute()) {
+        $success = false;
+        $_SESSION['error'] = "Error error gjate fshirjes se posteve: " . $conn->error;
+    }
+    $delete_posts_stmt->close();
+
+    if ($success) {
+        $stmt = $conn->prepare("DELETE FROM users WHERE ID = ?");
+        $stmt->bind_param("i", $user_id);
+
+        if ($stmt->execute()) {
+            $conn->commit();
+            $_SESSION['message'] = "User-i u fshi me sukses";
+            // echo "<script>alert('User-i u fshi me sukses')</script>";
+        } else {
+            $success = false;
+            $_SESSION['error'] = "Error, " . $conn->error;
+            $conn->rollback();
+            // echo "<script>alert('Error, $conn->error')</script>";
+        }
+        $stmt->close();
     } else {
-        $_SESSION['error'] = "Error, " . $conn->error;
-        // echo "<script>alert('Error, $conn->error')</script>";
+        $conn->rollback();
     }
     
-    $stmt->close();
+    
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
@@ -91,7 +111,7 @@ if (isset($_SESSION['error'])) {
         <div class="section">
             <h2>Menaxhimi User-eve</h2>
             <?php 
-            $sql_users = "SELECT ID, Username, Password FROM users WHERE is_admin = 0 ORDER BY ID DESC";
+            $sql_users = "SELECT * FROM users WHERE is_admin = 0 ORDER BY ID DESC";
             $result_users = $conn->query($sql_users);
             $users_count = $result_users ? $result_users->num_rows : 0;
             ?>
@@ -101,6 +121,7 @@ if (isset($_SESSION['error'])) {
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Student ID</th>
                             <th>Username</th>
                             <th>Password</th>
                             <th>Actions</th>
@@ -111,6 +132,7 @@ if (isset($_SESSION['error'])) {
                         <?php while ($user = $result_users->fetch_assoc()): ?>
                             <tr>
                                 <td><?php echo $user["ID"] ?></td>
+                                <td><?php echo $user["Student_ID"] ?></td>
                                 <td><?php echo $user["Username"] ?></td>
                                 <td><?php echo substr($user['Password'], 0, 20) . '...'; ?></td>
                                 <td>

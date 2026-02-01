@@ -41,9 +41,9 @@ if (isset($_POST["sign_out"])) {
     <div id="nav-placeholder"></div>
 
     <div class="container">
-        <form action="" method="POST">
+        <!-- <form action="" method="POST">
             <button type="submit" name="sign_out">Sign Out</button>
-        </form>    
+        </form>     -->
 
         <!-- Hero Section -->
         <section class="hero">

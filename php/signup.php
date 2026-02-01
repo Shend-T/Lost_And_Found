@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
 
     // Check if user exists
-    $sql = "SELECT * FROM users WHERE ID = ?";
+    $sql = "SELECT * FROM users WHERE Student_ID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -21,16 +21,20 @@ if (isset($_POST['submit'])) {
     if ($result->num_rows === 1) {
         $message = "User-i ekziston";
         echo "<script>alert('$message')</script>";
+
+        exit();
     }
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO users (ID, Username, Password) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO users (Student_ID, Username, Password) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("iss", $id, $username, $hashed_password);
     $stmt->execute();
 
+    $auto_id = $conn->insert_id; // Merr id-ne e user-it te krijuar
+
     setcookie("user_username", $username, time() + 3600 * 24 * 10);
-    setcookie("user_id", $id, time() + 3600 * 24 * 10);
+    setcookie("user_id", $auto_id, time() + 3600 * 24 * 10);
 
     header("Location: index.php");
     exit();

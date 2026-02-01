@@ -106,7 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_post'])) {
                     action="" 
                     method="POST" 
                     enctype="multipart/form-data"
-                    
                     >
                     <img 
                         src="<?php echo $imageSrc; ?>"
@@ -173,6 +172,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_post'])) {
                         style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;"
                     >
             </form>
+        </div>
+        <div class="flex center" style="width: 100%;">
+            <a href="../admin.php" class="show_posts">Kthehu</a>
         </div>
         </div>
     </div>

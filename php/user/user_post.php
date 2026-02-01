@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_post'])) {
         $stmt->execute();
     }
 
-    header("Location: user.php");
+    header("Location: user_posts.php");
     exit;
 }
 
@@ -88,10 +88,11 @@ if (isset($_POST['delete_post'])) {
     $stmt->bind_param("ii", $post_id, $user_id);
     
     if ($stmt->execute()) {
-        header("Location: user.php");
+        header("Location: user_posts.php");
         exit;
     } else {
         echo "<script>alert('Gabim gjate fshirjes')</script>";
+        header("Location: " . $_SERVER['PHP_SELF']);
     }
 }
 ?>
